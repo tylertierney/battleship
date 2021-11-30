@@ -22,7 +22,7 @@ const Ocean: React.FC = () => {
               key={index2}
               coordinates={[index1, index2]}
               squareValue={item}
-            ></Square>
+            />
           );
         })}
       </div>
