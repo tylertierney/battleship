@@ -1,8 +1,13 @@
-import { useBattleship } from "../../context/GameContext";
+import { useBattleship, ShipInterface } from "../../context/GameContext";
 
 import Square from "../Square/Square";
 
-const Ocean: React.FC = () => {
+interface OceanProps {
+  shipToPlace: ShipInterface;
+  setShipToPlace: Function;
+}
+
+const Ocean: React.FC<OceanProps> = ({ shipToPlace, setShipToPlace }) => {
   const { ocean } = useBattleship();
 
   return ocean.map((item: any, index1: any) => {
@@ -22,6 +27,8 @@ const Ocean: React.FC = () => {
               key={index2}
               coordinates={[index1, index2]}
               squareValue={item}
+              shipToPlace={shipToPlace}
+              setShipToPlace={setShipToPlace}
             />
           );
         })}
