@@ -2,18 +2,21 @@ import { useBattleship } from "../../context/GameContext";
 
 import { ShipInterface, useShip } from "../../context/ShipContext";
 
+import "../../App.css";
+
 import {
   checkIfShipOutOfBounds,
-  getHoverStateFromSquare,
+  getCoordArrayFromShip,
 } from "../../helperFunctions";
 
 interface SquareProps {
   squareValue: number;
   coordinates: number[];
-  shipToPlace?: ShipInterface;
-  setShipToPlace?: Function;
+  // shipToPlace?: ShipInterface;
+  // setShipToPlace?: Function;
   isHovering: any[];
   setIsHovering: Function;
+  borderRight: string;
 }
 
 const Square: React.FC<SquareProps> = ({
@@ -21,6 +24,7 @@ const Square: React.FC<SquareProps> = ({
   coordinates,
   isHovering,
   setIsHovering,
+  borderRight,
 }) => {
   const { currentShip, setCurrentShip } = useShip();
 
@@ -38,8 +42,20 @@ const Square: React.FC<SquareProps> = ({
     ></div>
   );
 
+  const disabledShipTile = (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "gray",
+        border: "2px solid gray",
+        outline: "1px solid gray",
+      }}
+    ></div>
+  );
+
   let inner: any = null;
-  let arr = getHoverStateFromSquare(
+  let arr = getCoordArrayFromShip(
     currentShip.length,
     currentShip.orientation,
     isHovering[0],
@@ -52,10 +68,15 @@ const Square: React.FC<SquareProps> = ({
     setCurrentShip(currentShip);
   };
 
+  // if (squareValue === 1) {
+  //   inner = shipTile;
+  // }
+
   if (arr) {
     let result = checkIfShipOutOfBounds(
       arr,
       shipTile,
+      disabledShipTile,
       inner,
       handleClick,
       coordinates,
@@ -74,17 +95,18 @@ const Square: React.FC<SquareProps> = ({
       onClick={handleClick}
       onMouseEnter={() => setIsHovering([...coordinates])}
       style={{
-        width: "40px",
-        height: "40px",
+        width: "50px",
+        height: "50px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         cursor: "pointer",
-        border: "1px solid",
       }}
+      className={
+        borderRight === "borderRight" ? "borderRight" : "noBorderRight"
+      }
     >
       {inner}
-      {/* {squareValue} */}
     </div>
   );
 };

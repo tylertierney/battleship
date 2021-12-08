@@ -13,6 +13,7 @@ export const confirmShipPlacement = (copyOfOcean: any, arr: any) => {
 export const checkIfShipOutOfBounds = (
   arr: any,
   shipTile: any,
+  disabledShipTile: any,
   inner: any,
   handleClick: any,
   coordinates: any,
@@ -22,11 +23,12 @@ export const checkIfShipOutOfBounds = (
     const shipCoordX = arr[i].coords[0];
     const shipCoordY = arr[i].coords[1];
 
-    // This checks if any of the squares on the ship are out of bounds
+    // This checks if a square is "beneath" the ship while it is hovering
     if (shipCoordX === coordinates[0] && shipCoordY === coordinates[1]) {
       inner = shipTile;
     }
 
+    // This checks if any of the squares on the ship are out of bounds
     if (shipCoordX < 0 || shipCoordX > 7) {
       return { inner: null, handleClick: null };
     }
@@ -34,32 +36,16 @@ export const checkIfShipOutOfBounds = (
       return { inner: null, handleClick: null };
     }
 
-    // This checks if any of the squares on the ship are colliding with another placed ship
-    if (ocean[shipCoordX][shipCoordY] !== 0) {
-      return { inner: null, handleClick: null };
+    if (ocean[shipCoordX][shipCoordY] != 0) {
+      inner = null;
+      handleClick = null;
     }
   }
 
   return { inner, handleClick };
 };
 
-// export const checkForShipCollision = (
-//   arr: any,
-//   ocean: any,
-//   handleClick: any
-// ) => {
-//   for (let i = 0; i < arr.length; i++) {
-//     const shipX = arr[i].coords[0];
-//     const shipY = arr[i].coords[1];
-
-//     if (ocean[shipX][shipY] !== 0) {
-//       return null;
-//     }
-//   }
-//   return handleClick;
-// };
-
-export const getHoverStateFromSquare: any = (
+export const getCoordArrayFromShip: any = (
   length: number,
   orientation: string,
   targetX: number | null,

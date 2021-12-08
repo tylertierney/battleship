@@ -1,36 +1,31 @@
 import OceanProvider from "./context/GameContext";
-import Ocean from "./components/Ocean/Ocean";
-import { useState } from "react";
-import Instructions from "./components/Instructions/Instructions";
-
-import { useShip } from "./context/ShipContext";
-
-import { useBattleship } from "./context/GameContext";
 
 import ShipProvider from "./context/ShipContext";
 
+import { useEffect } from "react";
+
+import Waves from "./components/Waves/Waves";
+
 const App: React.FC = () => {
-  const { currentShip } = useShip();
+  useEffect(() => {
+    const threeScript = document.createElement("script");
+    threeScript.setAttribute("id", "threeScript");
+    threeScript.setAttribute(
+      "src",
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"
+    );
 
-  const { ocean } = useBattleship();
+    document.getElementsByTagName("head")[0].appendChild(threeScript);
 
-  const [isEnteringShips, setIsEnteringShips] = useState(true);
+    return () => {
+      if (threeScript) threeScript.remove();
+    };
+  }, []);
 
   return (
     <OceanProvider>
       <ShipProvider>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {isEnteringShips ? <Instructions /> : null}
-          <Ocean />
-        </div>
-        <button onClick={() => console.log(ocean)}>ocean</button>
+        <Waves />
       </ShipProvider>
     </OceanProvider>
   );

@@ -1,4 +1,21 @@
 *,
 :root {
   box-sizing: border-box;
+  font-family: "Readex Pro", sans-serif;
+}
+
+.borderBottom {
+  border-bottom: 2px solid white;
+}
+
+.noBorderBottom {
+  border-bottom: none;
+}
+
+.borderRight {
+  border-right: 2px solid white;
+}
+
+.noBorderRight {
+  border-right: none;
 }
