@@ -30,84 +30,6 @@ export interface ShipInterface {
   coordinateArray: any[][];
 }
 
-// const ships: any = [
-//   {
-//     name: "Battleship",
-//     length: 4,
-//     orientation: "Horizontal",
-//     mainX: null,
-//     mainY: null,
-//     coordinateArray: Array(4)
-//       .fill(0)
-//       .map(() => {
-//         return {
-//           coords: Array(2).fill(null),
-//           isHit: false,
-//         };
-//       }),
-//   },
-//   {
-//     name: "Carrier",
-//     length: 5,
-//     orientation: "Horizontal",
-//     mainX: null,
-//     mainY: null,
-//     coordinateArray: Array(5)
-//       .fill(0)
-//       .map(() => {
-//         return {
-//           coords: Array(2).fill(null),
-//           isHit: false,
-//         };
-//       }),
-//   },
-//   {
-//     name: "Cruiser",
-//     length: 3,
-//     orientation: "Horizontal",
-//     mainX: null,
-//     mainY: null,
-//     coordinateArray: Array(3)
-//       .fill(0)
-//       .map(() => {
-//         return {
-//           coords: Array(2).fill(null),
-//           isHit: false,
-//         };
-//       }),
-//   },
-//   {
-//     name: "Submarine",
-//     length: 3,
-//     orientation: "Horizontal",
-//     mainX: null,
-//     mainY: null,
-//     coordinateArray: Array(3)
-//       .fill(0)
-//       .map(() => {
-//         return {
-//           coords: Array(2).fill(null),
-//           isHit: false,
-//         };
-//       }),
-//   },
-//   {
-//     name: "Destroyer",
-//     length: 2,
-//     orientation: "Horizontal",
-//     mainX: null,
-//     mainY: null,
-//     coordinateArray: Array(2)
-//       .fill(0)
-//       .map(() => {
-//         return {
-//           coords: Array(2).fill(null),
-//           isHit: false,
-//         };
-//       }),
-//   },
-// ];
-
 const ships: any = [
   new Ship("Battleship", 4, "Horizontal", null, null),
   new Ship("Carrier", 5, "Horizontal", null, null),
@@ -152,7 +74,6 @@ const ShipProvider = ({ children }: any) => {
         } else {
           updatedShip.orientation = "Vertical";
         }
-        console.log(updatedShip);
         dispatch({ type: "updateCurrentShip", payload: updatedShip });
         break;
       default:
