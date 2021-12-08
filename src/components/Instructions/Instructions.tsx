@@ -1,44 +1,30 @@
-import { ShipInterface } from "../../context/GameContext";
+import { useShip } from "../../context/ShipContext";
 
-interface InstructionProps {
-  shipToPlace: ShipInterface;
-  setShipToPlace: Function;
-}
+const Instructions: React.FC = () => {
+  const { currentShip, updateCurrentShip, setCurrentShip } = useShip();
 
-const Instructions: React.FC<InstructionProps> = ({
-  shipToPlace,
-  setShipToPlace,
-}) => {
-  const changeOrientation = (shipToPlace: ShipInterface) => {
-    const newOrientation = { ...shipToPlace };
-    if (newOrientation.orientation === "Horizontal") {
-      newOrientation.orientation = "Vertical";
-    } else {
-      newOrientation.orientation = "Horizontal";
-    }
-
-    setShipToPlace(newOrientation);
-  };
+  const { name, length, orientation } = currentShip;
 
   return (
     <div style={{ marginBottom: "20px" }}>
       <h2>
         Place your&nbsp;
-        <span style={{ color: "blue" }}>{shipToPlace.name}</span>
+        <span style={{ color: "blue" }}>{name}</span>
       </h2>
       <ul style={{ listStyleType: "none" }}>
         <li>
           Length:&nbsp;
-          <span style={{ color: "blue" }}>{shipToPlace.length}&nbsp;tiles</span>
+          <span style={{ color: "blue" }}>{length}&nbsp;tiles</span>
         </li>
         <li>
           Orientation:&nbsp;
-          <span style={{ color: "blue" }}>{shipToPlace.orientation}</span>
-          <button onClick={() => changeOrientation(shipToPlace)}>
+          <span style={{ color: "blue" }}>{orientation}</span>
+          <button onClick={() => updateCurrentShip("changeOrientation")}>
             Change Orientation
           </button>
         </li>
       </ul>
+      <button onClick={() => setCurrentShip(currentShip)}>Change Ship</button>
     </div>
   );
 };

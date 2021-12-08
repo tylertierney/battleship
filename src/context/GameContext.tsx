@@ -1,21 +1,8 @@
 import React, { useContext, useReducer } from "react";
 
-import { activateShipTiles } from "../helperFunctions";
+import { confirmShipPlacement } from "../helperFunctions";
 
-export interface ShipInterface {
-  /**
-   * Name must be a string.
-   */
-  name: string;
-  /**
-   * Length must be an int;
-   */
-  length: number;
-  /**
-   * Orientation must be a string.
-   */
-  orientation: string;
-}
+import { ShipInterface } from "./ShipContext";
 
 const initialOcean: any = Array(8)
   .fill(0)
@@ -37,16 +24,14 @@ const OceanProvider = ({ children }: any) => {
 
   const enterCoordinates = (coordinates: number[]) => {
     const copyOfOcean = [...ocean];
-    // const xCoord = coordinates[0];
-    // const yCoord = coordinates[1];
 
     dispatch({ type: "enterCoordinates", payload: copyOfOcean });
   };
 
-  const enterShips = (shipToPlace: ShipInterface, coordinates: number[]) => {
+  const enterShips = (arr: any) => {
     let copyOfOcean = [...ocean];
 
-    copyOfOcean = activateShipTiles(shipToPlace, copyOfOcean, coordinates);
+    copyOfOcean = confirmShipPlacement(copyOfOcean, arr);
 
     dispatch({ type: "enterShips", payload: copyOfOcean });
   };

@@ -1,24 +1,41 @@
-import { ShipInterface } from "./context/GameContext";
+import { ShipInterface } from "./context/ShipContext";
 
-export const activateShipTiles = (
-  shipToPlace: ShipInterface,
-  copyOfOcean: any,
-  coordinates: number[]
+import { Ship } from "./context/ShipConstructor";
+
+export const confirmShipPlacement = (copyOfOcean: any, arr: any) => {
+  console.log(arr);
+  for (let i = 0; i < arr.length; i++) {
+    copyOfOcean[arr[i].coords[0]][arr[i].coords[1]] = 1;
+  }
+  console.log(copyOfOcean);
+  return copyOfOcean;
+};
+
+export const getHoverStateFromSquare: any = (
+  length: number,
+  orientation: string,
+  targetX: number | null,
+  targetY: number | null
 ) => {
-  const xCoord = coordinates[0];
-  const yCoord = coordinates[1];
-
-  switch (shipToPlace.name) {
-    case "Battleship":
-      copyOfOcean[xCoord][yCoord] = 1;
-      copyOfOcean[xCoord - 1][yCoord] = 1;
-      copyOfOcean[xCoord - 2][yCoord] = 1;
-      copyOfOcean[xCoord + 1][yCoord] = 1;
-      break;
-    case "Carrier":
-      //do something
-      break;
+  if (targetX === null || targetY === null) {
+    return null;
   }
 
-  return copyOfOcean;
+  let arr = Array(length).fill(0);
+  if (orientation === "Vertical") {
+    for (let i = -1; i < arr.length - 1; i++) {
+      arr[i + 1] = {
+        coords: [targetX + i, targetY],
+        isHit: false,
+      };
+    }
+  } else {
+    for (let i = -1; i < arr.length - 1; i++) {
+      arr[i + 1] = {
+        coords: [targetX, targetY + i],
+        isHit: false,
+      };
+    }
+  }
+  return arr;
 };

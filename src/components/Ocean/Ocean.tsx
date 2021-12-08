@@ -1,14 +1,14 @@
-import { useBattleship, ShipInterface } from "../../context/GameContext";
+import { useBattleship } from "../../context/GameContext";
+import { useShip } from "../../context/ShipContext";
 
 import Square from "../Square/Square";
 
-interface OceanProps {
-  shipToPlace: ShipInterface;
-  setShipToPlace: Function;
-}
+import { useState } from "react";
 
-const Ocean: React.FC<OceanProps> = ({ shipToPlace, setShipToPlace }) => {
+const Ocean: React.FC = () => {
   const { ocean } = useBattleship();
+
+  const [isHovering, setIsHovering] = useState([null, null]);
 
   return ocean.map((item: any, index1: any) => {
     return (
@@ -22,13 +22,15 @@ const Ocean: React.FC<OceanProps> = ({ shipToPlace, setShipToPlace }) => {
         }}
       >
         {item.map((item: any, index2: any) => {
+          const coordinates = [index1, index2];
+
           return (
             <Square
               key={index2}
-              coordinates={[index1, index2]}
+              coordinates={coordinates}
               squareValue={item}
-              shipToPlace={shipToPlace}
-              setShipToPlace={setShipToPlace}
+              isHovering={isHovering}
+              setIsHovering={setIsHovering}
             />
           );
         })}
