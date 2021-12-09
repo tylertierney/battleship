@@ -1,6 +1,6 @@
 {
   "name": "battleship",
-  "homepage": "http://tylertierney.github.io/battleship",
+  "homepage": "http://tylertierney.github.io/battleship/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
