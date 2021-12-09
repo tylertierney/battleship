@@ -47,4 +47,4 @@ const OceanProvider = ({ children }: any) => {
 
 export default OceanProvider;
 
-export const useBattleship = () => useContext(OceanContext);
+export const useGameContext = () => useContext(OceanContext);

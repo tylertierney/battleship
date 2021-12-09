@@ -94,16 +94,54 @@ export const getCoordArrayFromShip: any = (
   return arr;
 };
 
-// export const determineBorderBottom = (index1: number) => {
-//   if (index1 === 7) {
-//     return "noBorderBottom";
-//   }
-//   return "borderBottom";
-// };
+export const generateLetters = () => {
+  let letters = [];
 
-// export const determineBorderRight = (index2: number) => {
-//   if (index2 === 7) {
-//     return "noBorderRight";
-//   }
-//   return "borderRight";
-// };
+  for (let i = 0; i < 9; i++) {
+    let inner: string | null = String.fromCharCode(i - 1 + 65);
+    if (i === 0) {
+      inner = null;
+    }
+    letters.push(
+      <div
+        key={i}
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "white",
+          opacity: "0.5",
+        }}
+      >
+        {inner}
+      </div>
+    );
+  }
+
+  return letters;
+};
+
+export const generateNumbers = () => {
+  let numbers = [];
+  for (let j = 0; j < 8; j++) {
+    numbers.push(
+      <div
+        key={j}
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "white",
+          opacity: "0.5",
+        }}
+      >
+        {j + 1}
+      </div>
+    );
+  }
+  return numbers;
+};

@@ -1,10 +1,15 @@
+import "../../App.css";
+
 import { useShip } from "../../context/ShipContext";
 
 import { BiRefresh } from "react-icons/bi";
 
+import { useSquareSize } from "../../context/SquareSize";
+
 // import { getCurrentShip } from "../../helperFunctions";
 
 const Instructions: React.FC = () => {
+  const { squareSize }: any = useSquareSize();
   let { ships, currentShip, updateCurrentShip } = useShip();
 
   currentShip = currentShip();
@@ -21,9 +26,10 @@ const Instructions: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         color: "white",
+        maxWidth: "90vw",
       }}
     >
-      <h1 style={{ margin: "8px" }}>
+      <h1 style={{ margin: "8px" }} className="instructionsHeader">
         Place your&nbsp;
         <span
           style={{
@@ -33,7 +39,14 @@ const Instructions: React.FC = () => {
           {name}
         </span>
       </h1>
-      <ul style={{ listStyleType: "none", width: "400px" }}>
+      <ul
+        style={{
+          listStyleType: "none",
+          minWidth: "300px",
+          maxWidth: "450px",
+          padding: "0",
+        }}
+      >
         <li
           style={{
             display: "flex",
@@ -43,7 +56,7 @@ const Instructions: React.FC = () => {
           }}
         >
           <span>Length:</span>
-          <span style={{ fontSize: "1.3rem" }}>{length}&nbsp;tiles</span>
+          <span className="instructionControls">{length}&nbsp;tiles</span>
         </li>
         <li
           style={{
@@ -65,8 +78,8 @@ const Instructions: React.FC = () => {
               style={{
                 textDecoration: "underline",
                 marginRight: "10px",
-                fontSize: "1.3rem",
               }}
+              className="instructionControls"
             >
               {orientation}
             </span>

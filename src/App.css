@@ -55,3 +55,25 @@ body {
 .pointDown {
   transform: rotate(180deg) translate(0px, 3px);
 }
+
+.instructionControls {
+  font-size: 1.3rem;
+}
+
+@media only screen and (max-width: 400px) {
+  .instructionsHeader {
+    font-size: 1.5rem;
+  }
+  .instructionControls {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .instructionsHeader {
+    font-size: 1.6rem;
+  }
+  .instructionControls {
+    font-size: 1.2rem;
+  }
+}

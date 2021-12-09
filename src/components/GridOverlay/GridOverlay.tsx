@@ -1,4 +1,8 @@
+import { useSquareSize } from "../../context/SquareSize";
+
 const GridOverlay = () => {
+  const { squareSize }: any = useSquareSize();
+
   let columns: any = [];
   let rows: any = [];
 
@@ -12,23 +16,24 @@ const GridOverlay = () => {
     }
     columns.push(
       <div
+        key={i}
         style={{
-          width: "50px",
+          width: squareSize + "px",
           height: "100%",
           borderRight,
         }}
       ></div>
     );
     rows.push(
-      <div style={{ width: "100%", height: "50%", borderBottom }}></div>
+      <div key={i} style={{ width: "100%", height: "50%", borderBottom }}></div>
     );
   }
 
   return (
     <div
       style={{
-        width: "400px",
-        height: "400px",
+        width: 8 * squareSize + "px",
+        height: 8 * squareSize + "px",
         position: "absolute",
         top: "0",
         left: "0",
@@ -38,8 +43,8 @@ const GridOverlay = () => {
       <div
         style={{
           position: "absolute",
-          width: "400px",
-          height: "400px",
+          width: "100%",
+          height: "100%",
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",

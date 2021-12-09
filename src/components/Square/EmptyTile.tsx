@@ -1,8 +1,10 @@
-import { useBattleship } from "../../context/GameContext";
+import { useGameContext } from "../../context/GameContext";
 
-import { ShipInterface, useShip } from "../../context/ShipContext";
+import { useShip } from "../../context/ShipContext";
 
 import "../../App.css";
+
+import { useSquareSize } from "../../context/SquareSize";
 
 import {
   checkIfShipOutOfBounds,
@@ -22,11 +24,12 @@ const EmptyTile: React.FC<SquareProps> = ({
   isHovering,
   setIsHovering,
 }) => {
+  const { squareSize }: any = useSquareSize();
   let { ships, currentShip, setCurrentShip, updateCurrentShip } = useShip();
 
   currentShip = currentShip();
 
-  const { ocean, enterShips } = useBattleship();
+  const { ocean, enterShips } = useGameContext();
 
   const shipTile = (
     <div
@@ -65,17 +68,13 @@ const EmptyTile: React.FC<SquareProps> = ({
     handleClick = result.handleClick;
   }
 
-  if (squareValue === 1 || squareValue === 2) {
-    inner = shipTile;
-  }
-
   return (
     <div
       onClick={handleClick}
       onMouseEnter={() => setIsHovering([...coordinates])}
       onMouseLeave={() => setIsHovering([null, null])}
       style={{
-        width: "50px",
+        width: squareSize + "px",
         height: "100%",
         display: "flex",
         justifyContent: "center",

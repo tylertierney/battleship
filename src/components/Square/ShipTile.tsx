@@ -1,14 +1,18 @@
 import "../../App.css";
 
+import { useSquareSize } from "../../context/SquareSize";
+
 interface ShipTileProps {
   //   borderRight: string;
   //   borderBottom: string;
 }
 const ShipTile: React.FC<ShipTileProps> = () => {
+  const { squareSize }: any = useSquareSize();
+
   return (
     <div
       style={{
-        width: "50px",
+        width: squareSize + "px",
         height: "100%",
         display: "flex",
         justifyContent: "center",

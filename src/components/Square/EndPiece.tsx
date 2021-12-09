@@ -1,12 +1,13 @@
 import "../../App.css";
 
-// import { useBattleship } from "../../context/GameContext";
+import { useSquareSize } from "../../context/SquareSize";
 
 interface EndPieceProps {
   coordinates: number[];
   squareValue: number;
 }
 const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
+  const { squareSize }: any = useSquareSize();
   let direction;
   let borderRight = "none";
   let borderBottom = "none";
@@ -38,7 +39,7 @@ const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
     <div
       style={{
         height: "95%",
-        width: "50px",
+        width: squareSize + "px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

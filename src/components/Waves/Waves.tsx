@@ -4,8 +4,6 @@ import WAVES from "vanta/dist/vanta.waves.min.js";
 import Ocean from "../Ocean/Ocean";
 import Instructions from "../Instructions/Instructions";
 
-import { useShip } from "../../context/ShipContext";
-
 const Waves = () => {
   const [vantaEffect, setVantaEffect] = useState<any>(0);
   const myRef = useRef(null);
@@ -21,9 +19,10 @@ const Waves = () => {
           minWidth: 200.0,
           scale: 1.0,
           scaleMobile: 1.0,
-          color: 0x191b1e,
+          // color: 0x191b1e,
+          color: 0x101e36,
           waveHeight: 30.0,
-          waveSpeed: 0.25,
+          waveSpeed: 0.4,
           zoom: 0.81,
         })
       );
@@ -50,20 +49,6 @@ const Waves = () => {
       {isEnteringShips ? <Instructions /> : null}
       <Ocean />
     </div>
-    // <div
-    //   style={{
-    //     display: "flex",
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "center",
-    //     width: "100vw",
-    //     height: "700px",
-    //     backgroundColor: "#12242f",
-    //   }}
-    // >
-    //   {isEnteringShips ? <Instructions /> : null}
-    //   <Ocean />
-    // </div>
   );
 };
 
