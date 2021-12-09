@@ -3,33 +3,27 @@ import { useShip } from "../../context/ShipContext";
 
 import "../../App.css";
 
-import Square from "../Square/Square";
+import EmptyTile from "../Square/EmptyTile";
 
 import { useState } from "react";
+
+import {
+  determineBorderBottom,
+  determineBorderRight,
+} from "../../helperFunctions";
+import ShipTile from "../Square/ShipTile";
+import EndPiece from "../Square/EndPiece";
 
 const Ocean: React.FC = () => {
   const { ocean } = useBattleship();
 
+  const { ships } = useShip();
+
   const [isHovering, setIsHovering] = useState([null, null]);
-
-  const determineBorderBottom = (index1: number) => {
-    if (index1 === 7) {
-      return "noBorderBottom";
-    }
-    return "borderBottom";
-  };
-
-  const determineBorderRight = (index2: number) => {
-    if (index2 === 7) {
-      return "noBorderRight";
-    }
-    return "borderRight";
-  };
 
   return (
     <div style={{ height: "400px", width: "400px" }}>
       {ocean.map((item: any, index1: any) => {
-        console.log(index1);
         return (
           <div
             key={index1}
@@ -44,16 +38,34 @@ const Ocean: React.FC = () => {
             {item.map((item: any, index2: any) => {
               const coordinates = [index1, index2];
 
-              return (
-                <Square
-                  key={index2}
-                  coordinates={coordinates}
-                  squareValue={item}
-                  isHovering={isHovering}
-                  setIsHovering={setIsHovering}
-                  borderRight={determineBorderRight(index2)}
-                />
-              );
+              switch (item) {
+                case 0:
+                  return (
+                    <EmptyTile
+                      key={index2}
+                      coordinates={coordinates}
+                      squareValue={item}
+                      isHovering={isHovering}
+                      setIsHovering={setIsHovering}
+                      borderRight={determineBorderRight(index2)}
+                    />
+                  );
+                case 1:
+                  return (
+                    <ShipTile
+                      key={index2}
+                      borderRight={determineBorderRight(index2)}
+                    />
+                  );
+                default:
+                  return (
+                    <EndPiece
+                      key={index2}
+                      coordinates={coordinates}
+                      squareValue={item}
+                    />
+                  );
+              }
             })}
           </div>
         );

@@ -1,7 +1,13 @@
 import { useShip } from "../../context/ShipContext";
 
+import { BiRefresh } from "react-icons/bi";
+
+// import { getCurrentShip } from "../../helperFunctions";
+
 const Instructions: React.FC = () => {
-  const { currentShip, updateCurrentShip, setCurrentShip } = useShip();
+  let { ships, currentShip, updateCurrentShip } = useShip();
+
+  currentShip = currentShip();
 
   const { name, length, orientation } = currentShip;
 
@@ -19,7 +25,13 @@ const Instructions: React.FC = () => {
     >
       <h1>
         Place your&nbsp;
-        <span style={{ textDecoration: "underline" }}>{name}</span>
+        <span
+          style={{
+            borderBottom: "2px solid white",
+          }}
+        >
+          {name}
+        </span>
       </h1>
       <ul style={{ listStyleType: "none", width: "400px" }}>
         <li
@@ -52,8 +64,11 @@ const Instructions: React.FC = () => {
             <span style={{ textDecoration: "underline", marginRight: "10px" }}>
               {orientation}
             </span>
-            <button onClick={() => updateCurrentShip("changeOrientation")}>
-              Cha
+            <button
+              onClick={() => updateCurrentShip("changeOrientation")}
+              className="orientationToggle"
+            >
+              <BiRefresh color="white" size="2rem" />
             </button>
           </div>
         </li>

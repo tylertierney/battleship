@@ -2,11 +2,33 @@ import { ShipInterface } from "./context/ShipContext";
 
 import { Ship } from "./context/ShipConstructor";
 
-export const confirmShipPlacement = (copyOfOcean: any, arr: any) => {
+export const confirmShipPlacement = (
+  copyOfOcean: any,
+  arr: any,
+  orientation: any
+) => {
   for (let i = 0; i < arr.length; i++) {
-    copyOfOcean[arr[i].coords[0]][arr[i].coords[1]] = 1;
-  }
+    let xVal = arr[i].coords[0];
+    let yVal = arr[i].coords[1];
 
+    // If the tile is an end piece, determine whether it's up, right, left, or down
+    if (i === 0) {
+      if (orientation === "Horizontal") {
+        copyOfOcean[xVal][yVal] = 2;
+      } else {
+        copyOfOcean[xVal][yVal] = 4;
+      }
+    } else if (i === arr.length - 1) {
+      if (orientation === "Horizontal") {
+        copyOfOcean[xVal][yVal] = 3;
+      } else {
+        copyOfOcean[xVal][yVal] = 5;
+      }
+    } else {
+      copyOfOcean[xVal][yVal] = 1;
+    }
+  }
+  console.log(copyOfOcean);
   return copyOfOcean;
 };
 
@@ -72,4 +94,22 @@ export const getCoordArrayFromShip: any = (
     }
   }
   return arr;
+};
+
+// export const endPiece = (direction: string) => {
+//   return <div className={`endPiece ${direction}`}></div>;
+// };
+
+export const determineBorderBottom = (index1: number) => {
+  if (index1 === 7) {
+    return "noBorderBottom";
+  }
+  return "borderBottom";
+};
+
+export const determineBorderRight = (index2: number) => {
+  if (index2 === 7) {
+    return "noBorderRight";
+  }
+  return "borderRight";
 };

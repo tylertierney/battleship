@@ -2,6 +2,13 @@
 :root {
   box-sizing: border-box;
   font-family: "Readex Pro", sans-serif;
+  --shipColor: red;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
 }
 
 .borderBottom {
@@ -18,4 +25,43 @@
 
 .noBorderRight {
   border-right: none;
+}
+
+.orientationToggle {
+  background-color: transparent;
+  border: 1px solid white;
+  box-shadow: 4px 4px 20px 1px rgb(0, 0, 0, 0.4);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+  opacity: 1;
+}
+
+.orientationToggle:active {
+  transform: translate(2%, 2%);
+  opacity: 0.6;
+}
+
+.endPiece {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 25px 46px 25px;
+  border-color: transparent transparent var(--shipColor) transparent;
+}
+
+.pointLeft {
+  transform: rotate(270deg);
+}
+
+.pointRight {
+  transform: rotate(90deg);
+}
+
+.pointUp {
+  transform: none;
+}
+
+.pointDown {
+  transform: rotate(180deg);
 }

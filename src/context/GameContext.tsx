@@ -28,10 +28,10 @@ const OceanProvider = ({ children }: any) => {
     dispatch({ type: "enterCoordinates", payload: copyOfOcean });
   };
 
-  const enterShips = (arr: any) => {
+  const enterShips = (arr: any, orientation: any) => {
     let copyOfOcean = [...ocean];
 
-    copyOfOcean = confirmShipPlacement(copyOfOcean, arr);
+    copyOfOcean = confirmShipPlacement(copyOfOcean, arr, orientation);
 
     dispatch({ type: "enterShips", payload: copyOfOcean });
   };

@@ -25,6 +25,7 @@ const App: React.FC = () => {
   return (
     <OceanProvider>
       <ShipProvider>
+        {/* some */}
         <Waves />
       </ShipProvider>
     </OceanProvider>

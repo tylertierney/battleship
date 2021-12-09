@@ -12,21 +12,21 @@ import {
 interface SquareProps {
   squareValue: number;
   coordinates: number[];
-  // shipToPlace?: ShipInterface;
-  // setShipToPlace?: Function;
   isHovering: any[];
   setIsHovering: Function;
   borderRight: string;
 }
 
-const Square: React.FC<SquareProps> = ({
+const EmptyTile: React.FC<SquareProps> = ({
   squareValue,
   coordinates,
   isHovering,
   setIsHovering,
   borderRight,
 }) => {
-  const { currentShip, setCurrentShip } = useShip();
+  let { ships, currentShip, setCurrentShip, updateCurrentShip } = useShip();
+
+  currentShip = currentShip();
 
   const { ocean, enterShips } = useBattleship();
 
@@ -35,12 +35,14 @@ const Square: React.FC<SquareProps> = ({
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: "blue",
-        border: "2px solid blue",
-        outline: "1px solid blue",
+        backgroundColor: "var(--shipColor)",
+        border: "2px solid var(--shipColor)",
+        outline: "1px solid var(--shipColor)",
       }}
     ></div>
   );
+
+  // const endPiece = <div className="endPiece pointLeft"></div>;
 
   const disabledShipTile = (
     <div
@@ -63,14 +65,10 @@ const Square: React.FC<SquareProps> = ({
   );
 
   let handleClick: any = () => {
-    enterShips(arr);
-    squareValue = 1;
+    enterShips(arr, currentShip.orientation);
+    updateCurrentShip("updateCoords", arr);
     setCurrentShip(currentShip);
   };
-
-  // if (squareValue === 1) {
-  //   inner = shipTile;
-  // }
 
   if (arr) {
     let result = checkIfShipOutOfBounds(
@@ -86,7 +84,7 @@ const Square: React.FC<SquareProps> = ({
     handleClick = result.handleClick;
   }
 
-  if (squareValue === 1) {
+  if (squareValue === 1 || squareValue === 2) {
     inner = shipTile;
   }
 
@@ -111,4 +109,4 @@ const Square: React.FC<SquareProps> = ({
   );
 };
 
-export default Square;
+export default EmptyTile;
