@@ -73,9 +73,10 @@ const EmptyTile: React.FC<SquareProps> = ({
     <div
       onClick={handleClick}
       onMouseEnter={() => setIsHovering([...coordinates])}
+      onMouseLeave={() => setIsHovering([null, null])}
       style={{
         width: "50px",
-        height: "95%",
+        height: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

@@ -9,7 +9,7 @@ const ShipTile: React.FC<ShipTileProps> = () => {
     <div
       style={{
         width: "50px",
-        height: "95%",
+        height: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

@@ -7,8 +7,6 @@ import Instructions from "../Instructions/Instructions";
 import { useShip } from "../../context/ShipContext";
 
 const Waves = () => {
-  const { ships, currentShip } = useShip();
-
   const [vantaEffect, setVantaEffect] = useState<any>(0);
   const myRef = useRef(null);
   useEffect(() => {
@@ -23,7 +21,7 @@ const Waves = () => {
           minWidth: 200.0,
           scale: 1.0,
           scaleMobile: 1.0,
-          color: 0x12242f,
+          color: 0x191b1e,
           waveHeight: 30.0,
           waveSpeed: 0.25,
           zoom: 0.81,
@@ -43,7 +41,7 @@ const Waves = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         width: "100vw",
         height: "700px",
@@ -56,7 +54,7 @@ const Waves = () => {
     //   style={{
     //     display: "flex",
     //     flexDirection: "column",
-    //     justifyContent: "center",
+    //     justifyContent: "flex-start",
     //     alignItems: "center",
     //     width: "100vw",
     //     height: "700px",

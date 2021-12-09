@@ -14,7 +14,7 @@ const Instructions: React.FC = () => {
   return (
     <div
       style={{
-        marginBottom: "20px",
+        marginBottom: "10px",
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -23,7 +23,7 @@ const Instructions: React.FC = () => {
         color: "white",
       }}
     >
-      <h1>
+      <h1 style={{ margin: "8px" }}>
         Place your&nbsp;
         <span
           style={{
@@ -43,7 +43,7 @@ const Instructions: React.FC = () => {
           }}
         >
           <span>Length:</span>
-          <span>{length}&nbsp;tiles</span>
+          <span style={{ fontSize: "1.3rem" }}>{length}&nbsp;tiles</span>
         </li>
         <li
           style={{
@@ -61,7 +61,13 @@ const Instructions: React.FC = () => {
               alignItems: "center",
             }}
           >
-            <span style={{ textDecoration: "underline", marginRight: "10px" }}>
+            <span
+              style={{
+                textDecoration: "underline",
+                marginRight: "10px",
+                fontSize: "1.3rem",
+              }}
+            >
               {orientation}
             </span>
             <button

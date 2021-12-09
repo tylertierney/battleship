@@ -2,29 +2,13 @@
 :root {
   box-sizing: border-box;
   font-family: "Readex Pro", sans-serif;
-  --shipColor: red;
+  --shipColor: rgb(187, 187, 187);
 }
 
 body {
   max-width: 100vw;
   overflow-x: hidden;
   margin: 0;
-}
-
-.borderBottom {
-  border-bottom: 2px solid white;
-}
-
-.noBorderBottom {
-  border-bottom: none;
-}
-
-.borderRight {
-  border-right: 2px solid white;
-}
-
-.noBorderRight {
-  border-right: none;
 }
 
 .orientationToggle {
@@ -35,6 +19,9 @@ body {
   cursor: pointer;
   transition: 0.1s ease-in-out;
   opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .orientationToggle:active {
@@ -43,26 +30,28 @@ body {
 }
 
 .endPiece {
-  width: 0;
-  height: 0;
+  width: 100%;
+  height: 100%;
   border-style: solid;
-  border-width: 6px 25px 46px 25px;
-  /* border-width: 3px 12px 23px 12px; */
-  border-color: transparent transparent var(--shipColor) transparent;
+  border-width: 2px;
+  border-radius: 51% 49% 48% 52% / 98% 100% 0% 2%;
+  /* border-color: transparent transparent var(--shipColor) transparent; */
+  border-color: var(--shipColor);
+  background-color: var(--shipColor);
 }
 
 .pointLeft {
-  transform: rotate(270deg);
+  transform: rotate(270deg) translate(0px, 3px);
 }
 
 .pointRight {
-  transform: rotate(90deg);
+  transform: rotate(90deg) translate(0px, 3px);
 }
 
 .pointUp {
-  transform: none;
+  transform: translate(0px, 3px);
 }
 
 .pointDown {
-  transform: rotate(180deg);
+  transform: rotate(180deg) translate(0px, 3px);
 }
