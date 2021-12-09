@@ -14,7 +14,6 @@ interface SquareProps {
   coordinates: number[];
   isHovering: any[];
   setIsHovering: Function;
-  borderRight: string;
 }
 
 const EmptyTile: React.FC<SquareProps> = ({
@@ -22,7 +21,6 @@ const EmptyTile: React.FC<SquareProps> = ({
   coordinates,
   isHovering,
   setIsHovering,
-  borderRight,
 }) => {
   let { ships, currentShip, setCurrentShip, updateCurrentShip } = useShip();
 
@@ -36,22 +34,6 @@ const EmptyTile: React.FC<SquareProps> = ({
         width: "100%",
         height: "100%",
         backgroundColor: "var(--shipColor)",
-        border: "2px solid var(--shipColor)",
-        outline: "1px solid var(--shipColor)",
-      }}
-    ></div>
-  );
-
-  // const endPiece = <div className="endPiece pointLeft"></div>;
-
-  const disabledShipTile = (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        backgroundColor: "gray",
-        border: "2px solid gray",
-        outline: "1px solid gray",
       }}
     ></div>
   );
@@ -74,7 +56,6 @@ const EmptyTile: React.FC<SquareProps> = ({
     let result = checkIfShipOutOfBounds(
       arr,
       shipTile,
-      disabledShipTile,
       inner,
       handleClick,
       coordinates,
@@ -94,15 +75,13 @@ const EmptyTile: React.FC<SquareProps> = ({
       onMouseEnter={() => setIsHovering([...coordinates])}
       style={{
         width: "50px",
-        height: "50px",
+        height: "95%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         cursor: "pointer",
+        overflow: "hidden",
       }}
-      className={
-        borderRight === "borderRight" ? "borderRight" : "noBorderRight"
-      }
     >
       {inner}
     </div>

@@ -9,6 +9,7 @@ interface EndPieceProps {
 const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
   let direction;
   let borderRight = "none";
+  let borderBottom = "none";
 
   switch (squareValue) {
     case 2:
@@ -20,6 +21,7 @@ const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
       break;
     case 4:
       direction = "pointUp";
+      borderRight = "2px solid white";
       break;
     case 5:
       direction = "pointDown";
@@ -28,13 +30,18 @@ const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
       direction = "pointLeft";
   }
 
+  if (coordinates[1] === 7) {
+    borderRight = "none";
+  }
+
   return (
     <div
       style={{
-        maxWidth: "100%",
-        maxHeight: "90%",
-        overflow: "hidden",
-        borderRight,
+        height: "95%",
+        width: "50px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <div className={`endPiece ${direction}`}></div>

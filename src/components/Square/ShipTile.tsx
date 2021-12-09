@@ -1,25 +1,32 @@
 import "../../App.css";
 
 interface ShipTileProps {
-  borderRight: string;
+  //   borderRight: string;
+  //   borderBottom: string;
 }
-const ShipTile: React.FC<ShipTileProps> = ({ borderRight }) => {
+const ShipTile: React.FC<ShipTileProps> = () => {
   return (
     <div
       style={{
         width: "50px",
-        height: "50px",
+        height: "95%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         cursor: "pointer",
         backgroundColor: "var(--shipColor)",
-        borderColor: "var(--shipColor)",
+        border: "2px solid var(--shipColor)",
+        overflow: "hidden",
       }}
-      //   className={
-      //     borderRight === "borderRight" ? "borderRight" : "noBorderRight"
-      //   }
-    ></div>
+    >
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "var(--shipColor)",
+        }}
+      ></div>
+    </div>
   );
 };
 

@@ -28,14 +28,12 @@ export const confirmShipPlacement = (
       copyOfOcean[xVal][yVal] = 1;
     }
   }
-  console.log(copyOfOcean);
   return copyOfOcean;
 };
 
 export const checkIfShipOutOfBounds = (
   arr: any,
   shipTile: any,
-  disabledShipTile: any,
   inner: any,
   handleClick: any,
   coordinates: any,
@@ -96,20 +94,16 @@ export const getCoordArrayFromShip: any = (
   return arr;
 };
 
-// export const endPiece = (direction: string) => {
-//   return <div className={`endPiece ${direction}`}></div>;
+// export const determineBorderBottom = (index1: number) => {
+//   if (index1 === 7) {
+//     return "noBorderBottom";
+//   }
+//   return "borderBottom";
 // };
 
-export const determineBorderBottom = (index1: number) => {
-  if (index1 === 7) {
-    return "noBorderBottom";
-  }
-  return "borderBottom";
-};
-
-export const determineBorderRight = (index2: number) => {
-  if (index2 === 7) {
-    return "noBorderRight";
-  }
-  return "borderRight";
-};
+// export const determineBorderRight = (index2: number) => {
+//   if (index2 === 7) {
+//     return "noBorderRight";
+//   }
+//   return "borderRight";
+// };
