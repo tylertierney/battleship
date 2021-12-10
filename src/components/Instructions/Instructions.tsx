@@ -19,7 +19,6 @@ const Instructions: React.FC = () => {
   return (
     <div
       style={{
-        marginBottom: "10px",
         width: "100%",
         display: "flex",
         flexDirection: "column",

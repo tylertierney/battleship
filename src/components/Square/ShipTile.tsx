@@ -3,10 +3,9 @@ import "../../App.css";
 import { useSquareSize } from "../../context/SquareSize";
 
 interface ShipTileProps {
-  //   borderRight: string;
-  //   borderBottom: string;
+  shipColor: string;
 }
-const ShipTile: React.FC<ShipTileProps> = () => {
+const ShipTile: React.FC<ShipTileProps> = ({ shipColor }) => {
   const { squareSize }: any = useSquareSize();
 
   return (
@@ -17,17 +16,17 @@ const ShipTile: React.FC<ShipTileProps> = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        cursor: "pointer",
-        backgroundColor: "var(--shipColor)",
-        border: "2px solid var(--shipColor)",
+        backgroundColor: shipColor,
         overflow: "hidden",
+        cursor: "none",
       }}
     >
       <div
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: "var(--shipColor)",
+          backgroundColor: shipColor,
+          overflow: "hidden",
         }}
       ></div>
     </div>

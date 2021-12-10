@@ -13,18 +13,38 @@ import GridOverlay from "../GridOverlay/GridOverlay";
 
 import ShipTile from "../Square/ShipTile";
 import EndPiece from "../Square/EndPiece";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { generateLetters, generateNumbers } from "../../helperFunctions";
 
+import HoveredShip from "../HoveredShip/HoveredShip";
+
+import { handleHover } from "../../helperFunctions";
+
+import Numbers from "../Numbers/Numbers";
+import Letters from "../Letters/Letters";
+
 const Ocean: React.FC = () => {
+  const hoverRef = useRef<HTMLDivElement>(null);
+  const oceanRef = useRef<HTMLDivElement>(null);
+
   const { squareSize, setSquareSize }: any = useSquareSize();
+
+  const [oceanOffsetX, setOceanOffsetX] = useState(0);
+  const [oceanOffsetY, setOceanOffsetY] = useState(0);
 
   useEffect(() => {
     if (window.innerWidth < 400) {
       setSquareSize(38);
+    } else {
+      setSquareSize(50);
     }
-  }, []);
+
+    if (oceanRef.current) {
+      setOceanOffsetX(oceanRef.current.getBoundingClientRect().left);
+      setOceanOffsetY(oceanRef.current.getBoundingClientRect().top);
+    }
+  }, [window.innerWidth, oceanRef.current]);
 
   const { ocean } = useGameContext();
 
@@ -32,6 +52,22 @@ const Ocean: React.FC = () => {
 
   let letters = generateLetters();
   let numbers = generateNumbers();
+
+  const handleMouseEnter = () => {
+    if (hoverRef.current) {
+      hoverRef.current.style.display = "flex";
+      hoverRef.current.style.visibility = "visible";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverRef.current) {
+      hoverRef.current.style.display = "none";
+      hoverRef.current.style.visibility = "hidden";
+    }
+  };
+
+  const [placementIsDisabled, setPlacementIsDisabled] = useState(true);
 
   return (
     <>
@@ -43,15 +79,8 @@ const Ocean: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <div
-          style={{
-            height: squareSize + "px",
-            width: 9 * squareSize + "px",
-            display: "flex",
-          }}
-        >
-          {letters}
-        </div>
+        <Letters letters={letters} />
+
         <div
           style={{
             display: "flex",
@@ -59,24 +88,26 @@ const Ocean: React.FC = () => {
             height: 8 * squareSize + "px",
           }}
         >
+          <Numbers numbers={numbers} />
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: squareSize + "px",
-              height: "100%",
-            }}
-          >
-            {numbers}
-          </div>
-          <div
+            ref={oceanRef}
             style={{
               height: 8 * squareSize + "px",
               width: 8 * squareSize + "px",
               position: "relative",
+              overflow: "hidden",
             }}
+            onMouseEnter={(e) => handleMouseEnter()}
+            onMouseMove={(e) =>
+              handleHover(e, hoverRef, oceanOffsetX, oceanOffsetY)
+            }
+            onMouseLeave={(e) => handleMouseLeave()}
           >
             <GridOverlay />
+            <HoveredShip
+              hoverRef={hoverRef}
+              placementIsDisabled={placementIsDisabled}
+            />
             {ocean.map((item: any, index1: any) => {
               return (
                 <div
@@ -88,6 +119,7 @@ const Ocean: React.FC = () => {
                     width: "100%",
                     position: "relative",
                     height: squareSize + "px",
+                    // zIndex: 1,
                   }}
                 >
                   {item.map((item: any, index2: any) => {
@@ -102,16 +134,21 @@ const Ocean: React.FC = () => {
                             squareValue={item}
                             isHovering={isHovering}
                             setIsHovering={setIsHovering}
+                            placementIsDisabled={placementIsDisabled}
+                            setPlacementIsDisabled={setPlacementIsDisabled}
                           />
                         );
                       case 1:
-                        return <ShipTile key={index2} />;
+                        return (
+                          <ShipTile key={index2} shipColor="var(--shipColor)" />
+                        );
                       default:
                         return (
                           <EndPiece
                             key={index2}
                             coordinates={coordinates}
                             squareValue={item}
+                            shipColor="var(--shipColor)"
                           />
                         );
                     }
@@ -119,6 +156,10 @@ const Ocean: React.FC = () => {
                 </div>
               );
             })}
+            {/* <HoveredShip
+              hoverRef={hoverRef}
+              placementIsDisabled={placementIsDisabled}
+            /> */}
           </div>
         </div>
       </div>

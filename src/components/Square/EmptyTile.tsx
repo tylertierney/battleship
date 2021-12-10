@@ -6,6 +6,8 @@ import "../../App.css";
 
 import { useSquareSize } from "../../context/SquareSize";
 
+import { useEffect, useState } from "react";
+
 import {
   checkIfShipOutOfBounds,
   getCoordArrayFromShip,
@@ -16,6 +18,8 @@ interface SquareProps {
   coordinates: number[];
   isHovering: any[];
   setIsHovering: Function;
+  placementIsDisabled: boolean;
+  setPlacementIsDisabled: Function;
 }
 
 const EmptyTile: React.FC<SquareProps> = ({
@@ -23,6 +27,8 @@ const EmptyTile: React.FC<SquareProps> = ({
   coordinates,
   isHovering,
   setIsHovering,
+  placementIsDisabled,
+  setPlacementIsDisabled,
 }) => {
   const { squareSize }: any = useSquareSize();
   let { ships, currentShip, setCurrentShip, updateCurrentShip } = useShip();
@@ -55,8 +61,33 @@ const EmptyTile: React.FC<SquareProps> = ({
     setCurrentShip(currentShip);
   };
 
+  useEffect(() => {
+    if (arr) {
+      let result = checkIfShipOutOfBounds(
+        arr,
+        shipTile,
+        inner,
+        handleClick,
+        coordinates,
+        ocean
+      );
+      // inner = result.inner;
+      handleClick = result.handleClick;
+
+      if (result.handleClick === null) {
+        setPlacementIsDisabled(() => true);
+      } else {
+        setPlacementIsDisabled(() => false);
+      }
+    }
+
+    if (arr == null) {
+      setPlacementIsDisabled(() => true);
+    }
+  }, [JSON.stringify(arr)]);
+
   if (arr) {
-    let result = checkIfShipOutOfBounds(
+    let result2 = checkIfShipOutOfBounds(
       arr,
       shipTile,
       inner,
@@ -64,13 +95,12 @@ const EmptyTile: React.FC<SquareProps> = ({
       coordinates,
       ocean
     );
-    inner = result.inner;
-    handleClick = result.handleClick;
+    inner = result2.inner;
   }
 
   return (
     <div
-      onClick={handleClick}
+      onClick={placementIsDisabled ? null : handleClick}
       onMouseEnter={() => setIsHovering([...coordinates])}
       onMouseLeave={() => setIsHovering([null, null])}
       style={{
@@ -79,8 +109,9 @@ const EmptyTile: React.FC<SquareProps> = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        cursor: "pointer",
+        // cursor: "pointer",
         overflow: "hidden",
+        cursor: "none",
       }}
     >
       {inner}

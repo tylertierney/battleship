@@ -5,12 +5,16 @@ import { useSquareSize } from "../../context/SquareSize";
 interface EndPieceProps {
   coordinates: number[];
   squareValue: number;
+  shipColor: string;
 }
-const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
+const EndPiece: React.FC<EndPieceProps> = ({
+  coordinates,
+  squareValue,
+  shipColor,
+}) => {
   const { squareSize }: any = useSquareSize();
   let direction;
   let borderRight = "none";
-  let borderBottom = "none";
 
   switch (squareValue) {
     case 2:
@@ -31,10 +35,6 @@ const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
       direction = "pointLeft";
   }
 
-  if (coordinates[1] === 7) {
-    borderRight = "none";
-  }
-
   return (
     <div
       style={{
@@ -43,9 +43,13 @@ const EndPiece: React.FC<EndPieceProps> = ({ coordinates, squareValue }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        cursor: "none",
       }}
     >
-      <div className={`endPiece ${direction}`}></div>
+      <div
+        style={{ backgroundColor: shipColor, borderColor: shipColor }}
+        className={`endPiece ${direction}`}
+      ></div>
     </div>
   );
 };

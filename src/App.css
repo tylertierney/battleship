@@ -3,11 +3,14 @@
   box-sizing: border-box;
   font-family: "Readex Pro", sans-serif;
   --shipColor: rgb(187, 187, 187);
+  --hoveredShipColor: #e8a2bd;
 }
 
 body {
   max-width: 100vw;
+  max-height: 100vh;
   overflow-x: hidden;
+  overflow-y: hidden;
   margin: 0;
 }
 
@@ -35,9 +38,8 @@ body {
   border-style: solid;
   border-width: 2px;
   border-radius: 51% 49% 48% 52% / 98% 100% 0% 2%;
-  /* border-color: transparent transparent var(--shipColor) transparent; */
-  border-color: var(--shipColor);
-  background-color: var(--shipColor);
+  /* border-color: var(--shipColor);
+  background-color: var(--shipColor); */
 }
 
 .pointLeft {

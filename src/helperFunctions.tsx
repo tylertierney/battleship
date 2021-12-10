@@ -45,7 +45,17 @@ export const checkIfShipOutOfBounds = (
 
     // This checks if a square is "beneath" the ship while it is hovering
     if (shipCoordX === coordinates[0] && shipCoordY === coordinates[1]) {
-      inner = shipTile;
+      // inner = shipTile;
+      inner = (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgb(0, 0, 0, 0.3)",
+            zIndex: -1,
+          }}
+        ></div>
+      );
     }
 
     // This checks if any of the squares on the ship are out of bounds
@@ -75,7 +85,7 @@ export const getCoordArrayFromShip: any = (
     return null;
   }
 
-  let arr = Array(length).fill(0);
+  let arr: any = Array(length).fill(0);
   if (orientation === "Vertical") {
     for (let i = -1; i < arr.length - 1; i++) {
       arr[i + 1] = {
@@ -144,4 +154,21 @@ export const generateNumbers = () => {
     );
   }
   return numbers;
+};
+
+export const handleHover = (
+  e: any,
+  ref: any,
+  oceanOffsetX: any,
+  oceanOffsetY: any
+) => {
+  const target = e.target;
+
+  const x = e.clientX - oceanOffsetX;
+  const y = e.clientY - oceanOffsetY;
+
+  ref = ref.current;
+
+  ref.style.top = y + "px";
+  ref.style.left = x + "px";
 };
