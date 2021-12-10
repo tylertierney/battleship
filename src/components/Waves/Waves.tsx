@@ -46,8 +46,8 @@ const Waves = () => {
         height: "700px",
       }}
     >
-      {isEnteringShips ? <Instructions /> : null}
-      <Ocean />
+      <Instructions isEnteringShips={isEnteringShips} />
+      <Ocean setIsEnteringShips={setIsEnteringShips} />
     </div>
   );
 };

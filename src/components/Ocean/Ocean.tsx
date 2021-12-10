@@ -24,7 +24,11 @@ import { handleHover } from "../../helperFunctions";
 import Numbers from "../Numbers/Numbers";
 import Letters from "../Letters/Letters";
 
-const Ocean: React.FC = () => {
+interface OceanProps {
+  setIsEnteringShips: Function;
+}
+
+const Ocean: React.FC<OceanProps> = ({ setIsEnteringShips }) => {
   const hoverRef = useRef<HTMLDivElement>(null);
   const oceanRef = useRef<HTMLDivElement>(null);
 
@@ -136,6 +140,7 @@ const Ocean: React.FC = () => {
                             setIsHovering={setIsHovering}
                             placementIsDisabled={placementIsDisabled}
                             setPlacementIsDisabled={setPlacementIsDisabled}
+                            setIsEnteringShips={setIsEnteringShips}
                           />
                         );
                       case 1:

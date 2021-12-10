@@ -20,6 +20,7 @@ interface SquareProps {
   setIsHovering: Function;
   placementIsDisabled: boolean;
   setPlacementIsDisabled: Function;
+  setIsEnteringShips: Function;
 }
 
 const EmptyTile: React.FC<SquareProps> = ({
@@ -29,6 +30,7 @@ const EmptyTile: React.FC<SquareProps> = ({
   setIsHovering,
   placementIsDisabled,
   setPlacementIsDisabled,
+  setIsEnteringShips,
 }) => {
   const { squareSize }: any = useSquareSize();
   let { ships, currentShip, setCurrentShip, updateCurrentShip } = useShip();
@@ -59,6 +61,9 @@ const EmptyTile: React.FC<SquareProps> = ({
     enterShips(arr, currentShip.orientation);
     updateCurrentShip("updateCoords", arr);
     setCurrentShip(currentShip);
+    if (currentShip.name === "Destroyer") {
+      setIsEnteringShips(false);
+    }
   };
 
   useEffect(() => {

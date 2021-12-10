@@ -1,21 +1,11 @@
-import "../../App.css";
+import ShipPlacementInstructions from "./ShipPlacementInstructions";
+import GameInstructions from "./GameInstructions";
 
-import { useShip } from "../../context/ShipContext";
+interface InstructionProps {
+  isEnteringShips: boolean;
+}
 
-import { BiRefresh } from "react-icons/bi";
-
-import { useSquareSize } from "../../context/SquareSize";
-
-// import { getCurrentShip } from "../../helperFunctions";
-
-const Instructions: React.FC = () => {
-  const { squareSize }: any = useSquareSize();
-  let { ships, currentShip, updateCurrentShip } = useShip();
-
-  currentShip = currentShip();
-
-  const { name, length, orientation } = currentShip;
-
+const Instructions: React.FC<InstructionProps> = ({ isEnteringShips }) => {
   return (
     <div
       style={{
@@ -28,69 +18,7 @@ const Instructions: React.FC = () => {
         maxWidth: "90vw",
       }}
     >
-      <h1 style={{ margin: "8px" }} className="instructionsHeader">
-        Place your&nbsp;
-        <span
-          style={{
-            borderBottom: "2px solid white",
-          }}
-        >
-          {name}
-        </span>
-      </h1>
-      <ul
-        style={{
-          listStyleType: "none",
-          minWidth: "300px",
-          maxWidth: "450px",
-          padding: "0",
-        }}
-      >
-        <li
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "10px",
-          }}
-        >
-          <span>Length:</span>
-          <span className="instructionControls">{length}&nbsp;tiles</span>
-        </li>
-        <li
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Orientation:</span>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <span
-              style={{
-                textDecoration: "underline",
-                marginRight: "10px",
-              }}
-              className="instructionControls"
-            >
-              {orientation}
-            </span>
-            <button
-              onClick={() => updateCurrentShip("changeOrientation")}
-              className="orientationToggle"
-            >
-              <BiRefresh color="white" size="2rem" />
-            </button>
-          </div>
-        </li>
-      </ul>
+      {isEnteringShips ? <ShipPlacementInstructions /> : <GameInstructions />}
     </div>
   );
 };
