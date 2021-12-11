@@ -1,4 +1,4 @@
-import { useGameContext } from "../../context/GameContext";
+import { useOceanContext } from "../../context/OceanContext";
 
 import { useShip } from "../../context/ShipContext";
 
@@ -13,6 +13,8 @@ import {
   getCoordArrayFromShip,
 } from "../../helperFunctions";
 
+import { useGameContext } from "../../context/GameContext";
+
 interface SquareProps {
   squareValue: number;
   coordinates: number[];
@@ -20,7 +22,8 @@ interface SquareProps {
   setIsHovering: Function;
   placementIsDisabled: boolean;
   setPlacementIsDisabled: Function;
-  setIsEnteringShips: Function;
+  // setIsEnteringShips: Function;
+  // isEnteringShips: boolean;
 }
 
 const EmptyTile: React.FC<SquareProps> = ({
@@ -30,14 +33,16 @@ const EmptyTile: React.FC<SquareProps> = ({
   setIsHovering,
   placementIsDisabled,
   setPlacementIsDisabled,
-  setIsEnteringShips,
+  // setIsEnteringShips,
+  // isEnteringShips,
 }) => {
+  const { gameInfo, changeGamePhase }: any = useGameContext();
   const { squareSize }: any = useSquareSize();
   let { ships, currentShip, setCurrentShip, updateCurrentShip } = useShip();
 
   currentShip = currentShip();
 
-  const { ocean, enterShips } = useGameContext();
+  const { ocean, enterShips } = useOceanContext();
 
   const shipTile = (
     <div
@@ -62,7 +67,7 @@ const EmptyTile: React.FC<SquareProps> = ({
     updateCurrentShip("updateCoords", arr);
     setCurrentShip(currentShip);
     if (currentShip.name === "Destroyer") {
-      setIsEnteringShips(false);
+      changeGamePhase("playing");
     }
   };
 
@@ -76,7 +81,6 @@ const EmptyTile: React.FC<SquareProps> = ({
         coordinates,
         ocean
       );
-      // inner = result.inner;
       handleClick = result.handleClick;
 
       if (result.handleClick === null) {
@@ -107,14 +111,17 @@ const EmptyTile: React.FC<SquareProps> = ({
     <div
       onClick={placementIsDisabled ? null : handleClick}
       onMouseEnter={() => setIsHovering([...coordinates])}
-      onMouseLeave={() => setIsHovering([null, null])}
+      onMouseLeave={
+        gameInfo.phase === "enteringShips"
+          ? () => setIsHovering([null, null])
+          : undefined
+      }
       style={{
         width: squareSize + "px",
         height: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        // cursor: "pointer",
         overflow: "hidden",
         cursor: "none",
       }}

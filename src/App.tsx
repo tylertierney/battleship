@@ -1,4 +1,4 @@
-import OceanProvider from "./context/GameContext";
+import OceanProvider from "./context/OceanContext";
 
 import ShipProvider from "./context/ShipContext";
 
@@ -6,14 +6,18 @@ import SquareSizeProvider from "./context/SquareSize";
 
 import Waves from "./components/Waves/Waves";
 
+import GameContextProvider from "./context/GameContext";
+
 const App: React.FC = () => {
   return (
     <SquareSizeProvider>
-      <OceanProvider>
-        <ShipProvider>
-          <Waves />
-        </ShipProvider>
-      </OceanProvider>
+      <GameContextProvider>
+        <OceanProvider>
+          <ShipProvider>
+            <Waves />
+          </ShipProvider>
+        </OceanProvider>
+      </GameContextProvider>
     </SquareSizeProvider>
   );
 };

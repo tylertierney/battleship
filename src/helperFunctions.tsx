@@ -1,5 +1,3 @@
-import { ShipInterface } from "./context/ShipContext";
-
 import { Ship } from "./context/ShipConstructor";
 
 export const confirmShipPlacement = (
@@ -104,58 +102,6 @@ export const getCoordArrayFromShip: any = (
   return arr;
 };
 
-export const generateLetters = () => {
-  let letters = [];
-
-  for (let i = 0; i < 9; i++) {
-    let inner: string | null = String.fromCharCode(i - 1 + 65);
-    if (i === 0) {
-      inner = null;
-    }
-    letters.push(
-      <div
-        key={i}
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "white",
-          opacity: "0.5",
-        }}
-      >
-        {inner}
-      </div>
-    );
-  }
-
-  return letters;
-};
-
-export const generateNumbers = () => {
-  let numbers = [];
-  for (let j = 0; j < 8; j++) {
-    numbers.push(
-      <div
-        key={j}
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "white",
-          opacity: "0.5",
-        }}
-      >
-        {j + 1}
-      </div>
-    );
-  }
-  return numbers;
-};
-
 export const handleHover = (
   e: any,
   ref: any,
@@ -171,4 +117,74 @@ export const handleHover = (
 
   ref.style.top = y + "px";
   ref.style.left = x + "px";
+};
+
+export const handleMouseEnter = (ref: any) => {
+  if (ref.current) {
+    ref.current.style.display = "flex";
+    ref.current.style.visibility = "visible";
+  }
+};
+
+export const handleMouseLeave = (ref: any) => {
+  if (ref.current) {
+    ref.current.style.display = "none";
+    ref.current.style.visibility = "hidden";
+  }
+};
+
+export const generateComputerOcean = () => {
+  const battleship = [2, 1, 1, 3];
+
+  const ships: any = {
+    battleship: { values: [2, 1, 1, 3], orientation: "Horizontal" },
+    carrier: { values: [2, 1, 1, 1, 3], orientation: "Horizontal" },
+    cruiser: { values: [2, 1, 3], orientation: "Horizontal" },
+    submarine: { values: [2, 1, 3], orientation: "Horizontal" },
+    destroyer: { values: [2, 3], orientation: "Horizontal" },
+  };
+
+  // Randomly choose an orientation for each ship
+  for (const ship in ships) {
+    const random: number = Math.floor(Math.random() * 2);
+    const thisShip = ships[ship];
+    // If orientation ends up vertical, change the end pieces
+    if (random) {
+      thisShip.orientation = "Vertical";
+      thisShip.values[0] = 4;
+      thisShip.values[thisShip.values.length - 1] = 5;
+    }
+  }
+
+  let ocean = Array(8)
+    .fill(0)
+    .map(() => Array(8).fill(0));
+
+  // Place the horizontal ships randomly
+
+  for (const ship in ships) {
+    const thisShip = ships[ship];
+    const values = thisShip.values;
+    if (thisShip.orientation === "Horizontal") {
+      let row = Math.floor(Math.random() * 8);
+      let column = Math.floor(Math.random() * 8 - values.length - 1);
+
+      console.log(8 - values.length - 1);
+
+      for (let x = column, j = 0; j < values.length; x++, j++) {
+        ocean[row][x] = values[j];
+      }
+    }
+
+    // if (thisShip.orientation === "Vertical") {
+    //   let row = Math.floor(Math.random() * 8 - values.length - 1);
+    //   let column = Math.floor(Math.random() * 8);
+
+    //   for (let x = row, j = 0; j < values.length; x++, j++) {
+    //     ocean[x][row] = values[j];
+    //   }
+    // }
+  }
+  console.log(ocean);
+  return ocean;
 };

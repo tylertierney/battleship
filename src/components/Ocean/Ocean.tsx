@@ -1,5 +1,4 @@
-import { useGameContext } from "../../context/GameContext";
-import { useShip } from "../../context/ShipContext";
+import { useOceanContext } from "../../context/OceanContext";
 
 import { useSquareSize } from "../../context/SquareSize";
 
@@ -13,160 +12,139 @@ import GridOverlay from "../GridOverlay/GridOverlay";
 
 import ShipTile from "../Square/ShipTile";
 import EndPiece from "../Square/EndPiece";
-import { useEffect, useRef } from "react";
-
-import { generateLetters, generateNumbers } from "../../helperFunctions";
+import { useRef } from "react";
 
 import HoveredShip from "../HoveredShip/HoveredShip";
 
-import { handleHover } from "../../helperFunctions";
+import {
+  handleHover,
+  handleMouseEnter,
+  handleMouseLeave,
+} from "../../helperFunctions";
 
-import Numbers from "../Numbers/Numbers";
-import Letters from "../Letters/Letters";
+import { useGameContext } from "../../context/GameContext";
 
 interface OceanProps {
-  setIsEnteringShips: Function;
+  // setIsEnteringShips: Function;
+  // isEnteringShips: boolean;
+  oceanRef: any;
+  oceanOffsetX: number | null;
+  oceanOffsetY: number | null;
+  isPlayer: boolean;
 }
 
-const Ocean: React.FC<OceanProps> = ({ setIsEnteringShips }) => {
+const Ocean: React.FC<OceanProps> = ({
+  oceanRef,
+  oceanOffsetX,
+  oceanOffsetY,
+  isPlayer,
+}) => {
+  const { gameInfo }: any = useGameContext();
   const hoverRef = useRef<HTMLDivElement>(null);
-  const oceanRef = useRef<HTMLDivElement>(null);
 
   const { squareSize, setSquareSize }: any = useSquareSize();
 
-  const [oceanOffsetX, setOceanOffsetX] = useState(0);
-  const [oceanOffsetY, setOceanOffsetY] = useState(0);
-
-  useEffect(() => {
-    if (window.innerWidth < 400) {
-      setSquareSize(38);
-    } else {
-      setSquareSize(50);
-    }
-
-    if (oceanRef.current) {
-      setOceanOffsetX(oceanRef.current.getBoundingClientRect().left);
-      setOceanOffsetY(oceanRef.current.getBoundingClientRect().top);
-    }
-  }, [window.innerWidth, oceanRef.current]);
-
-  const { ocean } = useGameContext();
+  const { ocean, computerOcean } = useOceanContext();
 
   const [isHovering, setIsHovering] = useState([null, null]);
 
-  let letters = generateLetters();
-  let numbers = generateNumbers();
-
-  const handleMouseEnter = () => {
-    if (hoverRef.current) {
-      hoverRef.current.style.display = "flex";
-      hoverRef.current.style.visibility = "visible";
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (hoverRef.current) {
-      hoverRef.current.style.display = "none";
-      hoverRef.current.style.visibility = "hidden";
-    }
-  };
-
   const [placementIsDisabled, setPlacementIsDisabled] = useState(true);
+
+  const oceanToMap = isPlayer ? ocean : computerOcean;
 
   return (
     <>
       <div
+        ref={oceanRef}
         style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "center",
+          height: 8 * squareSize + "px",
+          width: 8 * squareSize + "px",
+          position: "relative",
+          overflow: "hidden",
         }}
+        onMouseEnter={
+          gameInfo.phase === "enteringShips"
+            ? (e) => handleMouseEnter(hoverRef)
+            : undefined
+        }
+        onMouseMove={(e) =>
+          gameInfo.phase === "enteringShips"
+            ? handleHover(e, hoverRef, oceanOffsetX, oceanOffsetY)
+            : undefined
+        }
+        onMouseLeave={
+          gameInfo.phase === "enteringShips"
+            ? (e) => handleMouseLeave(hoverRef)
+            : undefined
+        }
       >
-        <Letters letters={letters} />
+        <GridOverlay />
+        {gameInfo.phase === "enteringShips" && (
+          <HoveredShip
+            hoverRef={hoverRef}
+            placementIsDisabled={placementIsDisabled}
+          />
+        )}
+        {oceanToMap.map((item: any, index1: any) => {
+          return (
+            <div
+              key={index1}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                position: "relative",
+                height: squareSize + "px",
+              }}
+            >
+              {item.map((item: any, index2: any) => {
+                const coordinates = [index1, index2];
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            height: 8 * squareSize + "px",
-          }}
-        >
-          <Numbers numbers={numbers} />
+                switch (item) {
+                  case 0:
+                    return (
+                      <EmptyTile
+                        key={index2}
+                        coordinates={coordinates}
+                        squareValue={item}
+                        isHovering={isHovering}
+                        setIsHovering={setIsHovering}
+                        placementIsDisabled={placementIsDisabled}
+                        setPlacementIsDisabled={setPlacementIsDisabled}
+                        // setIsEnteringShips={setIsEnteringShips}
+                        // isEnteringShips={isEnteringShips}
+                      />
+                    );
+                  case 1:
+                    return (
+                      <ShipTile key={index2} shipColor="var(--shipColor)" />
+                    );
+                  default:
+                    return (
+                      <EndPiece
+                        key={index2}
+                        coordinates={coordinates}
+                        squareValue={item}
+                        shipColor="var(--shipColor)"
+                      />
+                    );
+                }
+              })}
+            </div>
+          );
+        })}
+        {gameInfo.phase === "playing" && (
           <div
-            ref={oceanRef}
             style={{
-              height: 8 * squareSize + "px",
-              width: 8 * squareSize + "px",
-              position: "relative",
-              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+              position: "absolute",
+              top: "0",
+              left: "0",
             }}
-            onMouseEnter={(e) => handleMouseEnter()}
-            onMouseMove={(e) =>
-              handleHover(e, hoverRef, oceanOffsetX, oceanOffsetY)
-            }
-            onMouseLeave={(e) => handleMouseLeave()}
-          >
-            <GridOverlay />
-            <HoveredShip
-              hoverRef={hoverRef}
-              placementIsDisabled={placementIsDisabled}
-            />
-            {ocean.map((item: any, index1: any) => {
-              return (
-                <div
-                  key={index1}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    position: "relative",
-                    height: squareSize + "px",
-                    // zIndex: 1,
-                  }}
-                >
-                  {item.map((item: any, index2: any) => {
-                    const coordinates = [index1, index2];
-
-                    switch (item) {
-                      case 0:
-                        return (
-                          <EmptyTile
-                            key={index2}
-                            coordinates={coordinates}
-                            squareValue={item}
-                            isHovering={isHovering}
-                            setIsHovering={setIsHovering}
-                            placementIsDisabled={placementIsDisabled}
-                            setPlacementIsDisabled={setPlacementIsDisabled}
-                            setIsEnteringShips={setIsEnteringShips}
-                          />
-                        );
-                      case 1:
-                        return (
-                          <ShipTile key={index2} shipColor="var(--shipColor)" />
-                        );
-                      default:
-                        return (
-                          <EndPiece
-                            key={index2}
-                            coordinates={coordinates}
-                            squareValue={item}
-                            shipColor="var(--shipColor)"
-                          />
-                        );
-                    }
-                  })}
-                </div>
-              );
-            })}
-            {/* <HoveredShip
-              hoverRef={hoverRef}
-              placementIsDisabled={placementIsDisabled}
-            /> */}
-          </div>
-        </div>
+          ></div>
+        )}
       </div>
     </>
   );

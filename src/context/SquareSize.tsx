@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 
-const initial = 50;
+const initial = 25;
 const SquareContext = React.createContext(initial);
 
 const SquareSizeProvider = ({ children }: any) => {

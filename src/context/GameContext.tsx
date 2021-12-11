@@ -1,50 +1,35 @@
 import React, { useContext, useReducer } from "react";
 
-import { confirmShipPlacement } from "../helperFunctions";
+const initial = { phase: "enteringShips" };
 
-import { ShipInterface } from "./ShipContext";
+const GameContext = React.createContext(initial);
 
-const initialOcean: any = Array(8)
-  .fill(0)
-  .map(() => Array(8).fill(0));
-
-const OceanContext = React.createContext(initialOcean);
-
-const OceanProvider = ({ children }: any) => {
+const GameContextProvider = ({ children }: any) => {
   const reducer = (state: any, action: any) => {
     switch (action.type) {
-      case "enterCoordinates":
-        return action.payload;
-      case "enterShips":
+      case "changeGamePhase":
         return action.payload;
     }
   };
 
-  const [ocean, dispatch] = useReducer(reducer, initialOcean);
+  const [gameInfo, dispatch] = useReducer(reducer, initial);
 
-  const enterCoordinates = (coordinates: number[]) => {
-    const copyOfOcean = [...ocean];
+  const changeGamePhase = (phase: string) => {
+    let copyOfGameInfo = { ...gameInfo };
 
-    dispatch({ type: "enterCoordinates", payload: copyOfOcean });
+    copyOfGameInfo.phase = phase;
+
+    dispatch({ type: "changeGamePhase", payload: copyOfGameInfo });
   };
 
-  const enterShips = (arr: any, orientation: any) => {
-    let copyOfOcean = [...ocean];
-
-    copyOfOcean = confirmShipPlacement(copyOfOcean, arr, orientation);
-
-    dispatch({ type: "enterShips", payload: copyOfOcean });
+  const ctx: any = {
+    gameInfo,
+    changeGamePhase,
   };
 
-  const ctx = {
-    ocean,
-    enterCoordinates,
-    enterShips,
-  };
-
-  return <OceanContext.Provider value={ctx}>{children}</OceanContext.Provider>;
+  return <GameContext.Provider value={ctx}>{children}</GameContext.Provider>;
 };
 
-export default OceanProvider;
+export default GameContextProvider;
 
-export const useGameContext = () => useContext(OceanContext);
+export const useGameContext = () => useContext(GameContext);

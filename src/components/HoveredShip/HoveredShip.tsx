@@ -102,7 +102,6 @@ const HoveredShip: React.FC<HoverRefProps> = ({
             ? `translate(${-(squareSize + 15)}px, -50%)`
             : `translate(-50%, ${-(squareSize + 10)}px)`,
         visibility: "hidden",
-        // zIndex: 2,
         cursor: "none",
       }}
     >

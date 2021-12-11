@@ -1,10 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import WAVES from "vanta/dist/vanta.waves.min.js";
-
-import Ocean from "../Ocean/Ocean";
 import Instructions from "../Instructions/Instructions";
+import UserGameboard from "../Gameboard/UserGameboard";
+import ComputerGameboard from "../Gameboard/ComputerGameboard";
+import { useGameContext } from "../../context/GameContext";
 
 const Waves = () => {
+  const { gameInfo }: any = useGameContext();
+
   const [vantaEffect, setVantaEffect] = useState<any>(0);
   const myRef = useRef(null);
   useEffect(() => {
@@ -19,7 +22,6 @@ const Waves = () => {
           minWidth: 200.0,
           scale: 1.0,
           scaleMobile: 1.0,
-          // color: 0x191b1e,
           color: 0x101e36,
           waveHeight: 30.0,
           waveSpeed: 0.4,
@@ -46,8 +48,23 @@ const Waves = () => {
         height: "700px",
       }}
     >
-      <Instructions isEnteringShips={isEnteringShips} />
-      <Ocean setIsEnteringShips={setIsEnteringShips} />
+      <Instructions />
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          width: "450px",
+          height: "450px",
+        }}
+      >
+        <UserGameboard
+          size={gameInfo.phase === "enteringShips" ? "large" : "small"}
+        />
+        {gameInfo.phase === "playing" && <ComputerGameboard size="large" />}
+      </div>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import ShipPlacementInstructions from "./ShipPlacementInstructions";
 import GameInstructions from "./GameInstructions";
 
-interface InstructionProps {
-  isEnteringShips: boolean;
-}
+import { useGameContext } from "../../context/GameContext";
 
-const Instructions: React.FC<InstructionProps> = ({ isEnteringShips }) => {
+const Instructions: React.FC = () => {
+  const { gameInfo }: any = useGameContext();
+
   return (
     <div
       style={{
@@ -18,7 +18,11 @@ const Instructions: React.FC<InstructionProps> = ({ isEnteringShips }) => {
         maxWidth: "90vw",
       }}
     >
-      {isEnteringShips ? <ShipPlacementInstructions /> : <GameInstructions />}
+      {gameInfo.phase === "enteringShips" ? (
+        <ShipPlacementInstructions />
+      ) : (
+        <GameInstructions />
+      )}
     </div>
   );
 };

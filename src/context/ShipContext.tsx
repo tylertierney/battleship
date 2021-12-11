@@ -16,26 +16,19 @@ export interface ShipInterface {
    */
   orientation: string;
   /**
-   * MainX is the X value of the user-selected tile upon which to place the ship.
-   */
-  mainX: number | null;
-  /**
-   * MainY is the Y value of the user-selected tile upon which to place the ship.
-   */
-  mainY: number | null;
-  /**
    * Coordinate Array is an array of arrays, each signifying coordinates
    * where the ship is placed
    */
   coordinateArray: any[][];
+  isCurrent: boolean;
 }
 
 const initialShips: any = [
-  new Ship("Battleship", 4, "Horizontal", null, null, null, true),
-  new Ship("Carrier", 5, "Horizontal", null, null, null, false),
-  new Ship("Cruiser", 3, "Horizontal", null, null, null, false),
-  new Ship("Submarine", 3, "Horizontal", null, null, null, false),
-  new Ship("Destroyer", 2, "Horizontal", null, null, null, false),
+  new Ship("Battleship", 4, "Horizontal", null, true),
+  new Ship("Carrier", 5, "Horizontal", null, false),
+  new Ship("Cruiser", 3, "Horizontal", null, false),
+  new Ship("Submarine", 3, "Horizontal", null, false),
+  new Ship("Destroyer", 2, "Horizontal", null, false),
 ];
 
 const ShipContext = React.createContext(initialShips);
@@ -58,8 +51,6 @@ const ShipProvider = ({ children }: any) => {
     for (let i = 0; i < copyOfShips.length; i++) {
       if (ship.name === copyOfShips[i].name) {
         if (i === copyOfShips.length - 1) {
-          // copyOfShips[i].isCurrent = false;
-          // copyOfShips[0].isCurrent = true;
           dispatch({ type: "setCurrentShip", payload: copyOfShips });
           return;
         }
