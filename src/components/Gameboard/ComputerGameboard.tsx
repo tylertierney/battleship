@@ -1,6 +1,6 @@
 import Numbers from "../Numbers/Numbers";
 import Letters from "../Letters/Letters";
-import Ocean from "../Ocean/Ocean";
+import ComputerOcean from "../Ocean/ComputerOcean";
 
 import { useEffect, useState, useRef } from "react";
 
@@ -8,11 +8,11 @@ import { useSquareSize } from "../../context/SquareSize";
 
 import { useGameContext } from "../../context/GameContext";
 
-interface UserGameboardProps {
+interface CompGameboardProps {
   size: string;
 }
 
-const ComputerGameboard: React.FC<UserGameboardProps> = ({ size }) => {
+const ComputerGameboard: React.FC<CompGameboardProps> = ({ size }) => {
   const { gameInfo }: any = useGameContext();
   const oceanRef = useRef<HTMLDivElement>(null);
   const { squareSize, setSquareSize }: any = useSquareSize();
@@ -63,11 +63,10 @@ const ComputerGameboard: React.FC<UserGameboardProps> = ({ size }) => {
           }}
         >
           <Numbers />
-          <Ocean
+          <ComputerOcean
             oceanRef={oceanRef}
             oceanOffsetX={oceanOffsetX}
             oceanOffsetY={oceanOffsetY}
-            isPlayer={false}
           />
         </div>
       </div>

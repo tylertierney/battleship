@@ -23,7 +23,7 @@ const HoveredShip: React.FC<HoverRefProps> = ({
 
   let hoveredShipColor = "var(--hoveredShipColor)";
   if (placementIsDisabled) {
-    hoveredShipColor = "rgb(173, 0, 0, 0.5)";
+    hoveredShipColor = "var(--disabledShipColor)";
   }
 
   for (let i = 0; i < currentShip.length; i++) {

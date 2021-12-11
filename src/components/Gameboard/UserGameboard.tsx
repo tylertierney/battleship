@@ -67,7 +67,6 @@ const UserGameboard: React.FC<UserGameboardProps> = ({ size }) => {
             oceanRef={oceanRef}
             oceanOffsetX={oceanOffsetX}
             oceanOffsetY={oceanOffsetY}
-            isPlayer={true}
           />
         </div>
       </div>

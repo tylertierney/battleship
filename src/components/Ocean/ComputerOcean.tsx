@@ -15,6 +15,7 @@ import EndPiece from "../Square/EndPiece";
 import { useRef } from "react";
 
 import HoveredShip from "../HoveredShip/HoveredShip";
+import TargetCursor from "../TargetCursor/TargetCursor";
 
 import {
   handleHover,
@@ -24,6 +25,8 @@ import {
 
 import { useGameContext } from "../../context/GameContext";
 
+import UnknownTile from "../Square/UnknownTile";
+
 interface OceanProps {
   // setIsEnteringShips: Function;
   // isEnteringShips: boolean;
@@ -32,7 +35,7 @@ interface OceanProps {
   oceanOffsetY: number | null;
 }
 
-const Ocean: React.FC<OceanProps> = ({
+const ComputerOcean: React.FC<OceanProps> = ({
   oceanRef,
   oceanOffsetX,
   oceanOffsetY,
@@ -48,8 +51,6 @@ const Ocean: React.FC<OceanProps> = ({
 
   const [placementIsDisabled, setPlacementIsDisabled] = useState(true);
 
-  // const oceanToMap = isPlayer ? ocean : computerOcean;
-
   return (
     <>
       <div
@@ -61,29 +62,34 @@ const Ocean: React.FC<OceanProps> = ({
           overflow: "hidden",
         }}
         onMouseEnter={
-          gameInfo.phase === "enteringShips"
-            ? (e) => handleMouseEnter(hoverRef)
-            : undefined
+          // gameInfo.phase === "enteringShips"
+          //   ?
+          (e) => handleMouseEnter(hoverRef)
+          // : undefined
         }
-        onMouseMove={(e) =>
-          gameInfo.phase === "enteringShips"
-            ? handleHover(e, hoverRef, oceanOffsetX, oceanOffsetY)
-            : undefined
+        onMouseMove={
+          (e) =>
+            // gameInfo.phase === "enteringShips"
+            //   ?
+            handleHover(e, hoverRef, oceanOffsetX, oceanOffsetY)
+          // : undefined
         }
         onMouseLeave={
-          gameInfo.phase === "enteringShips"
-            ? (e) => handleMouseLeave(hoverRef)
-            : undefined
+          // gameInfo.phase === "enteringShips"
+          //   ?
+          (e) => handleMouseLeave(hoverRef)
+          // : undefined
         }
       >
         <GridOverlay />
-        {gameInfo.phase === "enteringShips" && (
+        {/* {gameInfo.phase === "enteringShips" && (
           <HoveredShip
             hoverRef={hoverRef}
             placementIsDisabled={placementIsDisabled}
           />
-        )}
-        {ocean.map((item: any, index1: any) => {
+        )} */}
+        <TargetCursor hoverRef={hoverRef} />
+        {computerOcean.map((item: any, index1: any) => {
           return (
             <div
               key={index1}
@@ -99,53 +105,16 @@ const Ocean: React.FC<OceanProps> = ({
               {item.map((item: any, index2: any) => {
                 const coordinates = [index1, index2];
 
-                switch (item) {
-                  case 0:
-                    return (
-                      <EmptyTile
-                        key={index2}
-                        coordinates={coordinates}
-                        squareValue={item}
-                        isHovering={isHovering}
-                        setIsHovering={setIsHovering}
-                        placementIsDisabled={placementIsDisabled}
-                        setPlacementIsDisabled={setPlacementIsDisabled}
-                        // setIsEnteringShips={setIsEnteringShips}
-                        // isEnteringShips={isEnteringShips}
-                      />
-                    );
-                  case 1:
-                    return (
-                      <ShipTile key={index2} shipColor="var(--shipColor)" />
-                    );
-                  default:
-                    return (
-                      <EndPiece
-                        key={index2}
-                        coordinates={coordinates}
-                        squareValue={item}
-                        shipColor="var(--shipColor)"
-                      />
-                    );
-                }
+                return (
+                  <UnknownTile coordinates={coordinates} squareValue={item} />
+                );
               })}
             </div>
           );
         })}
-        {gameInfo.phase === "playing" && (
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "absolute",
-              top: "0",
-              left: "0",
-            }}
-          ></div>
-        )}
       </div>
     </>
   );
 };
 
-export default Ocean;
+export default ComputerOcean;

@@ -4,6 +4,7 @@
   font-family: "Readex Pro", sans-serif;
   --shipColor: rgb(187, 187, 187);
   --hoveredShipColor: #e8a2bd;
+  --disabledShipColor: rgb(173, 0, 0, 0.5);
 }
 
 body {
