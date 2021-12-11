@@ -134,10 +134,26 @@ export const handleMouseLeave = (ref: any) => {
 };
 
 export const generateComputerOcean = () => {
-  const battleship = [2, 1, 1, 3];
+  const checkForVerticalShipCollision = (
+    length: number,
+    ocean: any,
+    row: number,
+    column: number
+  ) => {
+    for (let i = row, j = 0; j < length; j++, i++) {
+      if (i > 7) {
+        return false;
+      }
+      if (ocean[i][column] != 0) {
+        return false;
+      }
+      console.log("row: " + row + "column: " + column);
+    }
+    return true;
+  };
 
   const ships: any = {
-    battleship: { values: [2, 1, 1, 3], orientation: "Horizontal" },
+    battleship: { values: [4, 1, 1, 5], orientation: "Vertical" },
     carrier: { values: [2, 1, 1, 1, 3], orientation: "Horizontal" },
     cruiser: { values: [2, 1, 3], orientation: "Horizontal" },
     submarine: { values: [2, 1, 3], orientation: "Horizontal" },
@@ -145,16 +161,16 @@ export const generateComputerOcean = () => {
   };
 
   // Randomly choose an orientation for each ship
-  for (const ship in ships) {
-    const random: number = Math.floor(Math.random() * 2);
-    const thisShip = ships[ship];
-    // If orientation ends up vertical, change the end pieces
-    if (random) {
-      thisShip.orientation = "Vertical";
-      thisShip.values[0] = 4;
-      thisShip.values[thisShip.values.length - 1] = 5;
-    }
-  }
+  // for (const ship in ships) {
+  //   const random: number = Math.floor(Math.random() * 2);
+  //   const thisShip = ships[ship];
+  //   // If orientation ends up vertical, change the end pieces
+  //   if (random) {
+  //     thisShip.orientation = "Vertical";
+  //     thisShip.values[0] = 4;
+  //     thisShip.values[thisShip.values.length - 1] = 5;
+  //   }
+  // }
 
   let ocean = Array(8)
     .fill(0)
@@ -162,28 +178,39 @@ export const generateComputerOcean = () => {
 
   // Place the horizontal ships randomly
 
+  let possibleRows = [0, 1, 2, 3, 4, 5, 6, 7];
+
   for (const ship in ships) {
     const thisShip = ships[ship];
     const values = thisShip.values;
     if (thisShip.orientation === "Horizontal") {
-      let row = Math.floor(Math.random() * 8);
-      let column = Math.floor(Math.random() * 8 - values.length - 1);
-
-      console.log(8 - values.length - 1);
-
-      for (let x = column, j = 0; j < values.length; x++, j++) {
-        ocean[row][x] = values[j];
+      let randomVal = Math.floor(Math.random() * possibleRows.length);
+      let row = possibleRows[randomVal];
+      possibleRows.splice(randomVal, 1);
+      let column = Math.floor(Math.random() * (8 - values.length - 1));
+      for (let j = 0; j < values.length; column++, j++) {
+        ocean[row][column] = values[j];
       }
     }
+  }
+  for (const ship in ships) {
+    const thisShip = ships[ship];
+    const values = thisShip.values;
+    if (thisShip.orientation === "Vertical") {
+      // let randomColumn = Math.floor(Math.random() * 8);
+      // let randomRow = Math.floor(Math.random() * (8 - values.length - 1));
 
-    // if (thisShip.orientation === "Vertical") {
-    //   let row = Math.floor(Math.random() * 8 - values.length - 1);
-    //   let column = Math.floor(Math.random() * 8);
-
-    //   for (let x = row, j = 0; j < values.length; x++, j++) {
-    //     ocean[x][row] = values[j];
-    //   }
-    // }
+      for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+          if (checkForVerticalShipCollision(values.length, ocean, i, j)) {
+            for (let z = 0; z < values.length; z++, i++) {
+              ocean[i][j] = values[z];
+            }
+            break;
+          }
+        }
+      }
+    }
   }
   console.log(ocean);
   return ocean;

@@ -1,6 +1,6 @@
 import React, { useContext, useReducer } from "react";
 
-const initial = { phase: "enteringShips" };
+const initial = { phase: "playing" };
 
 const GameContext = React.createContext(initial);
 
