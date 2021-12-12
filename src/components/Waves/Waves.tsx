@@ -35,7 +35,14 @@ const Waves = () => {
     };
   }, [vantaEffect]);
 
-  console.log(gameInfo.phase);
+  useEffect(() => {
+    if (gameInfo.score.human >= 17) {
+      changeGamePhase("gameOver", "human");
+    }
+    if (gameInfo.score.computer >= 17) {
+      changeGamePhase("gameOver", "computer");
+    }
+  }, [gameInfo.score.human, gameInfo.score.computer]);
 
   return (
     <div

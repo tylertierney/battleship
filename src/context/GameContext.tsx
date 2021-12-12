@@ -34,10 +34,14 @@ const GameContextProvider = ({ children }: any) => {
 
   const [gameInfo, dispatch] = useReducer(reducer, initial);
 
-  const changeGamePhase = (phase: string) => {
+  const changeGamePhase = (phase: string, winner: any) => {
     let copyOfGameInfo = { ...gameInfo };
 
     copyOfGameInfo.phase = phase;
+
+    if (winner) {
+      copyOfGameInfo.winner = winner;
+    }
 
     dispatch({ type: "changeGamePhase", payload: copyOfGameInfo });
   };
@@ -47,25 +51,9 @@ const GameContextProvider = ({ children }: any) => {
 
     if (player === "human") {
       copyOfGameInfo.score.human += 1;
-      dispatch({ type: "updateScore", payload: copyOfGameInfo });
     } else {
       copyOfGameInfo.score.computer += 1;
     }
-
-    if (copyOfGameInfo.score.human >= 1) {
-      console.log("should be a human winner here");
-      copyOfGameInfo.winner = "human";
-      copyOfGameInfo.phase = "gameOver";
-      console.log(copyOfGameInfo);
-      dispatch({ type: "updateScore", payload: copyOfGameInfo });
-      return;
-    }
-    // if (copyOfGameInfo.score.computer == 1) {
-    //   console.log("should be a comp winner here");
-    //   copyOfGameInfo.winner = "computer";
-    //   copyOfGameInfo.phase = "gameOver";
-    //   console.log(copyOfGameInfo);
-    // }
 
     dispatch({ type: "updateScore", payload: copyOfGameInfo });
   };
