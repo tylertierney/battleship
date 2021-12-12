@@ -2,6 +2,11 @@ import "../../App.css";
 
 import { useSquareSize } from "../../context/SquareSize";
 
+import { useGameContext } from "../../context/GameContext";
+
+import { checkIfSquareHasBeenShotAt } from "../../helperFunctions";
+import { hitShot } from "./UnknownTile";
+
 interface EndPieceProps {
   coordinates: number[];
   squareValue: number;
@@ -12,6 +17,8 @@ const EndPiece: React.FC<EndPieceProps> = ({
   squareValue,
   shipColor,
 }) => {
+  const { gameInfo }: any = useGameContext();
+
   const { squareSize }: any = useSquareSize();
   let direction;
   let borderRight = "none";
@@ -35,6 +42,12 @@ const EndPiece: React.FC<EndPieceProps> = ({
       direction = "pointLeft";
   }
 
+  let inner = null;
+
+  if (checkIfSquareHasBeenShotAt(coordinates, gameInfo.takenShots.computer)) {
+    inner = hitShot;
+  }
+
   return (
     <div
       style={{
@@ -47,9 +60,17 @@ const EndPiece: React.FC<EndPieceProps> = ({
       }}
     >
       <div
-        style={{ backgroundColor: shipColor, borderColor: shipColor }}
+        style={{
+          backgroundColor: shipColor,
+          borderColor: shipColor,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
         className={`endPiece ${direction}`}
-      ></div>
+      >
+        {inner}
+      </div>
     </div>
   );
 };

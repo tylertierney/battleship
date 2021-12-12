@@ -4,9 +4,10 @@ import Instructions from "../Instructions/Instructions";
 import UserGameboard from "../Gameboard/UserGameboard";
 import ComputerGameboard from "../Gameboard/ComputerGameboard";
 import { useGameContext } from "../../context/GameContext";
+import EndGameModal from "../EndGameModal/EndGameModal";
 
 const Waves = () => {
-  const { gameInfo }: any = useGameContext();
+  const { gameInfo, changeGamePhase }: any = useGameContext();
 
   const [vantaEffect, setVantaEffect] = useState<any>(0);
   const myRef = useRef(null);
@@ -34,7 +35,7 @@ const Waves = () => {
     };
   }, [vantaEffect]);
 
-  const [isEnteringShips, setIsEnteringShips] = useState(true);
+  console.log(gameInfo.phase);
 
   return (
     <div
@@ -63,8 +64,11 @@ const Waves = () => {
         <UserGameboard
           size={gameInfo.phase === "enteringShips" ? "large" : "small"}
         />
-        {gameInfo.phase === "playing" && <ComputerGameboard size="large" />}
+        {gameInfo.phase !== "enteringShips" && (
+          <ComputerGameboard size="large" />
+        )}
       </div>
+      {gameInfo.phase === "gameOver" ? <EndGameModal /> : null}
     </div>
   );
 };

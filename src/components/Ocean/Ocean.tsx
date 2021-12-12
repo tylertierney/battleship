@@ -25,8 +25,6 @@ import {
 import { useGameContext } from "../../context/GameContext";
 
 interface OceanProps {
-  // setIsEnteringShips: Function;
-  // isEnteringShips: boolean;
   oceanRef: any;
   oceanOffsetX: number | null;
   oceanOffsetY: number | null;
@@ -47,8 +45,6 @@ const Ocean: React.FC<OceanProps> = ({
   const [isHovering, setIsHovering] = useState([null, null]);
 
   const [placementIsDisabled, setPlacementIsDisabled] = useState(true);
-
-  // const oceanToMap = isPlayer ? ocean : computerOcean;
 
   return (
     <>
@@ -110,13 +106,15 @@ const Ocean: React.FC<OceanProps> = ({
                         setIsHovering={setIsHovering}
                         placementIsDisabled={placementIsDisabled}
                         setPlacementIsDisabled={setPlacementIsDisabled}
-                        // setIsEnteringShips={setIsEnteringShips}
-                        // isEnteringShips={isEnteringShips}
                       />
                     );
                   case 1:
                     return (
-                      <ShipTile key={index2} shipColor="var(--shipColor)" />
+                      <ShipTile
+                        coordinates={coordinates}
+                        key={index2}
+                        shipColor="var(--shipColor)"
+                      />
                     );
                   default:
                     return (

@@ -11,7 +11,10 @@ import { useEffect, useState } from "react";
 import {
   checkIfShipOutOfBounds,
   getCoordArrayFromShip,
+  checkIfSquareHasBeenShotAt,
 } from "../../helperFunctions";
+
+import { missedShot } from "../Square/UnknownTile";
 
 import { useGameContext } from "../../context/GameContext";
 
@@ -22,8 +25,6 @@ interface SquareProps {
   setIsHovering: Function;
   placementIsDisabled: boolean;
   setPlacementIsDisabled: Function;
-  // setIsEnteringShips: Function;
-  // isEnteringShips: boolean;
 }
 
 const EmptyTile: React.FC<SquareProps> = ({
@@ -33,8 +34,6 @@ const EmptyTile: React.FC<SquareProps> = ({
   setIsHovering,
   placementIsDisabled,
   setPlacementIsDisabled,
-  // setIsEnteringShips,
-  // isEnteringShips,
 }) => {
   const { gameInfo, changeGamePhase }: any = useGameContext();
   const { squareSize }: any = useSquareSize();
@@ -105,6 +104,10 @@ const EmptyTile: React.FC<SquareProps> = ({
       ocean
     );
     inner = result2.inner;
+  }
+
+  if (checkIfSquareHasBeenShotAt(coordinates, gameInfo.takenShots.computer)) {
+    inner = missedShot;
   }
 
   return (

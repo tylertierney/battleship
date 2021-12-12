@@ -68,7 +68,9 @@ const HoveredShip: React.FC<HoverRefProps> = ({
         );
       }
     } else {
-      pieces.push(<ShipTile key={i} shipColor={hoveredShipColor} />);
+      pieces.push(
+        <ShipTile key={i} coordinates={null} shipColor={hoveredShipColor} />
+      );
     }
   }
 

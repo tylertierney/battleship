@@ -237,3 +237,18 @@ export const generateComputerOcean = () => {
 
   return ocean;
 };
+
+export const checkIfSquareHasBeenShotAt = (
+  coordinates: any,
+  takenShots: any
+) => {
+  for (let i = 0; i < takenShots.length; i++) {
+    if (
+      takenShots[i][0] === coordinates[0] &&
+      takenShots[i][1] === coordinates[1]
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
