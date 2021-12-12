@@ -81,7 +81,8 @@ const GameContextProvider = ({ children }: any) => {
         availableComputerShots[randomX].splice(randomY, 1);
       }
 
-      if (ocean[randomX][randomY] != 0) {
+      if (ocean[shot[0]][shot[1]] != 0) {
+        // copyOfGameInfo.score.computer += 1;
         updateScore("computer");
       }
     }

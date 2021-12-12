@@ -45,7 +45,7 @@ const ComputerGameboard: React.FC<CompGameboardProps> = ({ size }) => {
 
   if (size === "small") {
     styles.position = "absolute";
-    styles.top = "-63%";
+    styles.top = "-61%";
     styles.left = "0";
     styles.transform = "scale(25%)";
   }

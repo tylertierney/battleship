@@ -35,14 +35,15 @@ const Waves = () => {
     };
   }, [vantaEffect]);
 
-  useEffect(() => {
-    if (gameInfo.score.human >= 17) {
-      changeGamePhase("gameOver", "human");
-    }
-    if (gameInfo.score.computer >= 17) {
-      changeGamePhase("gameOver", "computer");
-    }
-  }, [gameInfo.score.human, gameInfo.score.computer]);
+  // useEffect(() => {
+  //   console.log(gameInfo);
+  //   if (gameInfo.score.human >= 17) {
+  //     changeGamePhase("gameOver", "human");
+  //   }
+  //   if (gameInfo.score.computer >= 17) {
+  //     changeGamePhase("gameOver", "computer");
+  //   }
+  // }, [gameInfo.score.human, gameInfo.score.computer, gameInfo.score]);
 
   return (
     <div

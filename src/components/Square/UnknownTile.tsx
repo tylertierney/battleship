@@ -1,4 +1,4 @@
-import { ReactElement, ReactHTMLElement, useState } from "react";
+import { ReactElement, ReactHTMLElement, useState, useEffect } from "react";
 
 import "../../App.css";
 
@@ -43,7 +43,8 @@ const UnknownTile: React.FC<UnknownTileProps> = ({
 
   const [clickIsDisabled, setClickIsDisabled] = useState(false);
 
-  const { gameInfo, updateScore, takeAShot }: any = useGameContext();
+  const { gameInfo, changeGamePhase, updateScore, takeAShot }: any =
+    useGameContext();
 
   const [inner, setInner] = useState<string | ReactElement>("");
 
@@ -60,6 +61,18 @@ const UnknownTile: React.FC<UnknownTileProps> = ({
     setClickIsDisabled(() => true);
     takeAShot("computer", null, ocean);
   };
+
+  useEffect(() => {
+    console.log(gameInfo);
+    if (gameInfo.score.human >= 17) {
+      changeGamePhase("gameOver", "human");
+    }
+    if (gameInfo.score.computer >= 17) {
+      changeGamePhase("gameOver", "computer");
+    }
+  }, [gameInfo.score.human, gameInfo.score.computer, gameInfo.score]);
+
+  // console.log(gameInfo.score.computer);
 
   return (
     <div

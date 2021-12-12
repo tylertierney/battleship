@@ -3,7 +3,7 @@
   box-sizing: border-box;
   font-family: "Readex Pro", sans-serif;
   --shipColor: rgb(187, 187, 187);
-  --hoveredShipColor: #e8a2bd;
+  --hoveredShipColor: #37e3f9;
   --disabledShipColor: rgb(173, 0, 0, 0.5);
 }
 
@@ -39,8 +39,6 @@ body {
   border-style: solid;
   border-width: 2px;
   border-radius: 51% 49% 48% 52% / 98% 100% 0% 2%;
-  /* border-color: var(--shipColor);
-  background-color: var(--shipColor); */
 }
 
 .pointLeft {
